@@ -8,7 +8,7 @@ List::List(const Node* node){
     first_ = new Node(node);
 }
 
-List(const KeyType& key){
+List::List(const KeyType& key){
     first_ = new Node(key);
 }
 
