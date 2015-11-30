@@ -6,6 +6,7 @@ class List {
 public:
     List();
     List(const Node*);
+    List(const KeyType&);
     List (const List*);
     ~List();
 

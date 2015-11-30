@@ -1,27 +1,36 @@
 #include "list.h"
 
-List::List()
-{
-
+List::List(){
+    first_ = new Node();
 }
 
-List::List(const Node*)
-{
-
+List::List(const Node* node){
+    first_ = new Node(node);
 }
 
-List::List(const List*)
-{
-
+List(const KeyType& key){
+    first_ = new Node(key);
 }
 
-List::~List()
-{
 
+List::List(const List* list){
+    Node* tmp = list->first_;
+    first_ = new Node(tmp->key_);
+    Node* first = first_;
+    tmp = tmp->next_;
+    first = first->next_;
+    while(tmp != 0){
+        first = new Node(tmp->key_);
+        tmp = tmp->next_;
+        first = first->next_;
+    }
 }
 
-Node* List::find(const KeyType& key) const
-{
+List::~List(){
+    delete first_;
+}
+
+Node* List::find(const KeyType& key) const{
     if (first_ == 0)
         throw("List doesn't exist");
 
@@ -34,7 +43,7 @@ Node* List::find(const KeyType& key) const
     } while (node != 0);
 
     if (node == 0)
-    {
+{
         delete node;
         throw("Node is not found");
     }
@@ -42,8 +51,7 @@ Node* List::find(const KeyType& key) const
     return node;
 }
 
-void List::push(const KeyType& key)
-{
+void List::push(const KeyType& key){
     Node* node;
     try {
         node = new Node(key);
@@ -55,8 +63,7 @@ void List::push(const KeyType& key)
     first_ = node;
 }
 
-void List::pushAfter(const KeyType& nodeKey, const KeyType& key)
-{
+void List::pushAfter(const KeyType& nodeKey, const KeyType& key){
     Node* firstOccurrence;
     
     try {
@@ -79,13 +86,11 @@ void List::pushAfter(const KeyType& nodeKey, const KeyType& key)
     node->next_ = tmp;
 }
 
-void List::pushBefore(const KeyType& nodeKey, const KeyType& key)
-{
+void List::pushBefore(const KeyType& nodeKey, const KeyType& key){
 
 }
 
-void List::pushEnd(const KeyType& key)
-{
+void List::pushEnd(const KeyType& key){
     Node* node;
     try {
         node = new Node(key);
@@ -102,12 +107,10 @@ void List::pushEnd(const KeyType& key)
     first->next_ = node;
 }
 
-void List::remove(const KeyType& key)
-{
+void List::remove(const KeyType& key){
     
 }
 
-Node * List::getFirst(void) const
-{
+Node * List::getFirst(void) const{
     return first_;
 }
