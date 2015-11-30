@@ -1,11 +1,14 @@
 #ifndef _NODE_H_
 #define _NODE_H_
 
-typedef int KeyType;
+#include <iostream>
+#include <cstdlib>
 
-struct Node {
-    KeyType key_;
-    int *pNext_;
-};
+  typedef char KeyType;
+
+  struct Node {
+      KeyType key_;
+      int*    Next_;
+  };
 
 #endif
