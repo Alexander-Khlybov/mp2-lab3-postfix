@@ -1,7 +1,7 @@
 #include "postfix.h"
 
 Postfix::Postfix(){
-	opertor_ = new Stack();
+	operator_ = new Stack();
 	res_ = new Stack();
 }
 	
@@ -32,24 +32,24 @@ void decreasePriority(int k){
 }
 
 void procStr(void){
-	if (str_ == "0"){
+	if (str_ == '0'){
 		cout << "Enter the expression" << endl;
 		cin >> str_;
 	}
 	int k = 0; // Текущий приоритет
 	int m = 0; // Приоритет последнего элемента в operator_
 	for (int i = 0; i < str_.length(); i++){
-		if (isOperand(str[i])){
-			res_.push(str[i]);
+		if (isOperand(str_[i])){
+			res_.push(str_[i]);
 		}
-		else if (isOperator(str[i])){
+		else if (isOperator(str_[i])){
 			
-			if (str[i] = ')'){
+			if (str_[i] = ')'){
 				m = rightBr();
 				continue;
 			}
 
-			k = priorietyOperator(str[i]);
+			k = priorietyOperator(str_[i]);
 			if (k < m){
 				decreasePriority(k);
 				m = k;
@@ -57,7 +57,7 @@ void procStr(void){
 			}
 			m = k;
 
-			operator_.push(str[i]);
+			operator_.push(str_[i]);
 		} else {
 			continue;
 		}
@@ -94,7 +94,7 @@ int isOperator(const char key)const{
 }
 	
 int isOperand(const char key)const{
-	if ((isOperator(key)) || (key = _SPACE_))
+	if ((isOperator(key)) || (key == _SPACE_))
 		return 0;
 	return 1;
 }

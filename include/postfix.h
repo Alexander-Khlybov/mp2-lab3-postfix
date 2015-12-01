@@ -7,15 +7,6 @@
 typedef double VariableType;
 
 class Postfix {
-public:
-	Postfix();
-	~Postfix();
-
-
-	void procStr(void);
-	void setString(const string&);
-	VariableType calculate(void);
-	void getValuesOfVariables(void);
 
 private:
 	int rightBr(void);
@@ -25,7 +16,15 @@ private:
 	int  isOperand(const char)const;
 	Stack res_;
 	Stack operator_;
-	string str_ = "0";
+	string str_ = '0';
+public:
+	Postfix();
+	~Postfix();
+
+	void procStr(void);
+	void setString(const string&);
+	VariableType calculate(void);
+	void getValuesOfVariables(void);
 };
 
 
