@@ -10,7 +10,7 @@
 * [`samples`](https://github.com/Alexander-Khlybov/mp2-lab3-postfix/tree/master/samples) - директория для размещения исходных кодов приложений;
 * [`test`](https://github.com/Alexander-Khlybov/mp2-lab3-postfix/tree/master/test) - директория для размещения тестов;
 * [`sln`](https://github.com/Alexander-Khlybov/mp2-lab3-postfix/tree/master/sln/) - директория с файлими решений (на данный момент Visual Studio 2015);
-* `Rept` - директория с отчетом по лабораторной работе;
+* [`Rept`](https://github.com/Alexander-Khlybov/mp2-lab3-postfix/tree/master/Rept) - директория с отчетом по лабораторной работе;
 * Служебные файлы:
   * `.gitignore` - перечень расширений файлов, игнорируемых Git при добавлении файлов в репозиторий.;
   * `CMakeLists.txt` - корневой файл для сборки проекта с помощью CMake;
