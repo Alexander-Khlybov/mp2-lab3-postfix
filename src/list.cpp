@@ -1,7 +1,7 @@
 #include "list.h"
 
-List::List(){
-    first_ = new Node();
+List::List(void){
+    first_ = 0;
 }
 
 List::List(const Node* node){
@@ -91,7 +91,9 @@ int List::pushAfter(const KeyType& findKey, const KeyType& key){
 }
 
 int List::pushBefore(const KeyType& findKey, const KeyType& key){
-    
+    if (first_ == 0)
+        throw("List doesn't exist")
+
     if (first_->key_ == key)
         return push(key);
 
@@ -123,6 +125,9 @@ int List::pushBefore(const KeyType& findKey, const KeyType& key){
 }
 
 int List::pushEnd(const KeyType& key){
+    if (first_ == 0)
+        return push(key);
+
     Node* node;
     try {
         node = new Node(key);
@@ -141,7 +146,7 @@ int List::pushEnd(const KeyType& key){
 }
 
 void List::remove(const KeyType& findKey){
-    if (first_->next_ == 0)
+    if (first_ == 0)
         throw("List can't be removed");
 
     first_ = first_->next_;
