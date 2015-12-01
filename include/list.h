@@ -4,32 +4,32 @@
 
 class List {
 public:
-    List();
+    List(void);
     List(const Node*);
     List(const KeyType&);
     List (const List*);
-    ~List();
+    ~List(void);
 
-    // Поиск указателя на узел первого вхождения элемента в список
-    Node* find       (const KeyType&) const;
+    // Поиск указателя на узел первого вхождения элемента в список.
+    Node* find      (const KeyType&) const;
 
     // Вставить элемент в начало списка.
-    void  push       (const KeyType&);
+    int  push       (const KeyType&);
 
     // Вставить элемент после указанного узла.
-    void  pushAfter  (const KeyType&, const KeyType&);
+    int  pushAfter  (const KeyType&, const KeyType&);
 
     // Вставить элемент до указанного узла.
-    void  pushBefore (const KeyType&, const KeyType&);
+    int  pushBefore (const KeyType&, const KeyType&);
 
     // Вставить элемент в конец
-    void  pushEnd    (const KeyType&);
+    void  pushEnd   (const KeyType&);
 
     // Удалить первый узел, содерщищий указанный ключ.
-    void  remove     (const KeyType&);
+    void  remove    (const KeyType&);
 
     // Получить указатель на первый элемент списка.
-    Node* getFirst   (void) const;
+    Node* getFirst  (void) const;
 private:
     // Указатель на первый узел списка.
     Node* first_;
