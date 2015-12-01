@@ -8,7 +8,7 @@ List::List(const Node* node){
     first_ = new Node(node);
 }
 
-List(const KeyType& key){
+List::List(const KeyType& key){
     first_ = new Node(key);
 }
 
@@ -101,7 +101,7 @@ int List::pushBefore(const KeyType& findKey, const KeyType& key){
     Node* prewNode = first_;
     Node* node = first_->next_;
 
-    while ( (node->next_ != 0) && (node->key != key) ) {
+    while ( (node->next_ != 0) && (node->key_ != key) ) {
         prewNode = node;
         node = prewNode->next_;
     } 
@@ -111,13 +111,13 @@ int List::pushBefore(const KeyType& findKey, const KeyType& key){
 
     Node *tmp;
     try{
-        tmp = new Node(key)
+        tmp = new Node(key);
     } catch (...) {
         return 1;
     }
 
     prewNode->next_ = tmp;
-    temp->next_ = node;
+    tmp->next_ = node;
 
     return 0;
 }

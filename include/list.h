@@ -23,7 +23,7 @@ public:
     int  pushBefore (const KeyType&, const KeyType&);
 
     // Вставить элемент в конец
-    void  pushEnd   (const KeyType&);
+    int  pushEnd   (const KeyType&);
 
     // Удалить первый узел, содерщищий указанный ключ.
     void  remove    (const KeyType&);
