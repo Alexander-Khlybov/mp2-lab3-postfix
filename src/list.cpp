@@ -92,7 +92,7 @@ int List::pushAfter(const KeyType& findKey, const KeyType& key){
 
 int List::pushBefore(const KeyType& findKey, const KeyType& key){
     if (first_ == 0)
-        throw("List doesn't exist")
+        throw("List doesn't exist");
 
     if (first_->key_ == key)
         return push(key);
