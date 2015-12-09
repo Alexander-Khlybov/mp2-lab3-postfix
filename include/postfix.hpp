@@ -1,15 +1,45 @@
-#include "postfix.h"
+#ifndef _POSTFIX_H_
+#define _POSTFIX_H_
+#include "stack.hpp"
 
-Postfix::Postfix(){
-	operator_ = new Stack();
-	res_ = new Stack();
+#define _SPACE_ ' '
+
+typedef double VariableType;
+
+template <class KeyType>
+class Postfix {
+private:
+	int rightBr(void);
+	void decreasePriority(int);
+	int  priorietyOperator(const char)const;
+	int  isOperator(const char)const;
+	int  isOperand(const char)const;
+	Stack<KeyType> res_;
+	Stack<KeyType> operator_;
+	string str_ = '0';
+public:
+	Postfix();
+	~Postfix();
+
+	void procStr(void);
+	void setString(const string&);
+	VariableType calculate(void);
+	void getValuesOfVariables(void);
+};
+
+template <class KeyType>
+Postfix<KeyType>::Postfix(){
+	operator_ = new Stack<KeyType>();
+	res_ = new Stack<KeyType>();
 }
-	
-Postfix::~Postfix(void){
+
+template <class KeyType>	
+Postfix<KeyType>::~Postfix(void){
 
 }
 
-int rightBr(void){
+template <class KeyType>
+int Postfix<KeyType>::rightBr(void){
 	KeyType j = operator_.pop();
 	while(j != '('){
 		res_.push(j);
@@ -20,9 +50,10 @@ int rightBr(void){
 	return priorietyOperator(j);
 }
 
-void decreasePriority(int k){
+template <class KeyType>
+void Postfix<KeyType>::decreasePriority(int k){
 	KeyType j = operator_.pop();
-	while( (k <= priorietyOperator(j)) && (!operator_.isEmpty() ){
+	while( (k <= priorietyOperator(j)) && (!operator_.isEmpty() )){
 		res_.push(j);
 		j = operator_.pop();
 	}
@@ -31,7 +62,8 @@ void decreasePriority(int k){
 	operator_.push(k);
 }
 
-void procStr(void){
+template <class KeyType>
+void Postfix<KeyType>::procStr(void){
 	if (str_ == '0'){
 		cout << "Enter the expression" << endl;
 		cin >> str_;
@@ -67,11 +99,13 @@ void procStr(void){
 }
 
 
-void setString(const string& str){
+template <class KeyType>
+void Postfix<KeyType>::setString(const string& str){
 	str_ = str;
 }
 	
-int isOperator(const char key)const{
+template <class KeyType>
+int Postfix<KeyType>::isOperator(const char key)const{
 	switch (key)
 	{
 		case '+':
@@ -93,13 +127,15 @@ int isOperator(const char key)const{
 	}
 }
 	
-int isOperand(const char key)const{
+template <class KeyType>
+int Postfix<KeyType>::isOperand(const char key)const{
 	if ((isOperator(key)) || (key == _SPACE_))
 		return 0;
 	return 1;
 }
 
-int priorietyOperator(const char)const{
+template <class KeyType>
+int Postfix<KeyType>::priorietyOperator(const char)const{
 	if (isOperator(key))
 		switch (key)
 		{
@@ -120,11 +156,15 @@ int priorietyOperator(const char)const{
 		}
 }
 
-VariableType calculate(void){
+template <class KeyType>
+VariableType Postfix<KeyType>::calculate(void){
 	VariableType a;
 	return a;
 }
 	
-void getValuesOfVariables(void){
+template <class KeyType>
+void Postfix<KeyType>::getValuesOfVariables(void){
 
 }
+
+#endif

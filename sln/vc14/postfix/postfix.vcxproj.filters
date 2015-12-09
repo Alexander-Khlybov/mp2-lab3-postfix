@@ -18,27 +18,21 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\list.h">
+    <ClInclude Include="..\..\..\include\list.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\node.h">
+    <ClInclude Include="..\..\..\include\node.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\postfix.h">
+    <ClInclude Include="..\..\..\include\postfix.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\stack.h">
+    <ClInclude Include="..\..\..\include\stack.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\list.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\postfix.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\stack.cpp">
+    <ClCompile Include="..\..\..\src\fictive.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
