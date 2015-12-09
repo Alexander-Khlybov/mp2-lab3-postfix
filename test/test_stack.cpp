@@ -1,3 +1,3 @@
-#include "stack.h"
+#include "stack.hpp"
 
 #include <gtest.h>
