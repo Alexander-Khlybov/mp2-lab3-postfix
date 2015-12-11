@@ -2,7 +2,7 @@
 #define _POSTFIX_H_
 #include "stack.hpp"
 
-#define _SPACE_ ' '
+#define _SPACE_ " "
 
 typedef double VariableType;
 
@@ -16,7 +16,7 @@ private:
 	int  isOperand(const char)const;
 	Stack<KeyType> res_;
 	Stack<KeyType> operator_;
-	string str_ = '0';
+	string str_ = "0";
 public:
 	Postfix();
 	~Postfix();
@@ -41,7 +41,7 @@ Postfix<KeyType>::~Postfix(void){
 template <class KeyType>
 int Postfix<KeyType>::rightBr(void){
 	KeyType j = operator_.pop();
-	while(j != '('){
+	while(j != "("){
 		res_.push(j);
 		j =  operator_.pop();
 	}
@@ -64,7 +64,7 @@ void Postfix<KeyType>::decreasePriority(int k){
 
 template <class KeyType>
 void Postfix<KeyType>::procStr(void){
-	if (str_ == '0'){
+	if (str_ == "0"){
 		cout << "Enter the expression" << endl;
 		cin >> str_;
 	}
@@ -76,7 +76,7 @@ void Postfix<KeyType>::procStr(void){
 		}
 		else if (isOperator(str_[i])){
 			
-			if (str_[i] = ')'){
+			if (str_[i] = ")"){
 				m = rightBr();
 				continue;
 			}
@@ -108,19 +108,19 @@ template <class KeyType>
 int Postfix<KeyType>::isOperator(const char key)const{
 	switch (key)
 	{
-		case '+':
+		case "+":
 			return 1;
-		case '-':
+		case "-":
 			return 1;
-		case '*':
+		case "*":
 			return 1;
-		case '/':
+		case "/":
 			return 1;
-		case '(':
+		case "(":
 			return 1;
-		case ')':
+		case ")":
 			return 1;
-		case '=':
+		case "=":
 			return 1;
 		default:
 			return 0;
@@ -139,19 +139,19 @@ int Postfix<KeyType>::priorietyOperator(const char)const{
 	if (isOperator(key))
 		switch (key)
 		{
-			case '+':
+			case "+":
 				return 2;
-			case '-':
+			case "-":
 				return 2;
-			case '*':
+			case "*":
 				return 3;
-			case '/':
+			case "/":
 				return 3;
-			case '(':
+			case "(":
 				return 1;
-			case ')':
+			case ")":
 				return 1;
-			case '=':
+			case "=":
 				return 0;
 		}
 }
