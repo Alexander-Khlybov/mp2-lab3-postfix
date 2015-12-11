@@ -33,7 +33,7 @@ public:
     Node<KeyType>* getFirst  (void) const;
 private:
     // ”казатель на первый узел списка.
-    Node* first_;
+    Node<KeyType>* first_;
 };
 
 template <class KeyType>
