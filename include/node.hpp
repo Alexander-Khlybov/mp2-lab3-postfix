@@ -9,6 +9,7 @@ using namespace std;
 
 template <class KeyType>
 class Node {
+public:
     KeyType key_;
     Node<KeyType>* next_;
 
