@@ -11,6 +11,9 @@ public:
     List (const List<KeyType>*);
     ~List(void);
 
+    int operator== (const List&)const;
+    int operator!= (const List&)const;
+
     // Поиск указателя на узел первого вхождения элемента в список.
     Node<KeyType>* find      (const KeyType&) const;
 
@@ -33,7 +36,7 @@ public:
     Node<KeyType>* getFirst  (void) const;
 private:
     // Указатель на первый узел списка.
-    Node* first_;
+    Node<KeyType>* first_;
 };
 
 template <class KeyType>
@@ -50,7 +53,6 @@ template <class KeyType>
 List<KeyType>::List(const KeyType& key){
     first_ = new Node<KeyType>(key);
 }
-
 
 template <class KeyType>
 List<KeyType>::List(const List<KeyType>* list){
@@ -70,6 +72,30 @@ template <class KeyType>
 List<KeyType>::~List(){
     delete first_;
 }
+
+
+template <class KeyType>
+
+int List<KeyType>::operator== (const List& list)const{
+    Node<KeyType>* first1 = first_;
+    Node<KeyType>* first2 = list.first_;
+    while (first1 != 0) && (first2 != 0){
+        if(first1->key_ != first2->key_)
+            return 0;
+        first1 = first1->next_;
+        first2 = first2->next_;
+    }
+
+    if (first1 != first2)
+        return 0;
+    return 1;
+}
+
+template <class KeyType>
+int List<KeyType>::operator!= (const List& list)const{
+    return !(*this == list);
+}
+
 
 template <class KeyType>
 Node<KeyType>* List<KeyType>::find(const KeyType& key) const{
@@ -193,14 +219,21 @@ int List<KeyType>::pushEnd(const KeyType& key){
 
 template <class KeyType>
 void List<KeyType>::remove(const KeyType& findKey){
-    if (first_ == 0)
-        throw("List can't be removed");
+    Node<KeyType>* findNode = find(findKey);
 
-    first_ = first_->next_;
+    if (first_ == findNode) {
+        first_ == first_->next_;
+        return;
+    }
+
+    Node<KeyType>* first = first_;
+    while (first->next_ != findNode)
+        first = first->next_;
+    first->next_ = findNode->next_;
 }
 
 template <class KeyType>
-Node<KeyType> * List<KeyType>::getFirst(void) const{
+Node<KeyType>* List<KeyType>::getFirst(void) const{
     return first_;
 }
 

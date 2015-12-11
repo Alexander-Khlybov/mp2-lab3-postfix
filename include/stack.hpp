@@ -9,6 +9,9 @@ public:
 	Stack(const Stack<KeyType>*);
 	~Stack(void);
 
+    int operator== (const Stack&)const;
+    int operator!= (const Stack&)const;
+
 	// Проверка на полноту.
 	int isFull(void) const;
 
@@ -38,6 +41,16 @@ Stack<KeyType>::Stack(const Stack<KeyType>* stack){
 template <class KeyType>
 Stack<KeyType>::~Stack(void){
 	delete list_;
+}
+
+template <class KeyType>
+int Stack<KeyType>::operator== (const Stack& stack)const{
+	return (list_ == stack.list_);
+}
+
+template <class KeyType>
+int Stack<KeyType>::operator!= (const Stack& stack)const{
+	return (list_ != stack.list_);
 }
 
 template <class KeyType>
