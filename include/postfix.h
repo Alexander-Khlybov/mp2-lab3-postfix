@@ -24,8 +24,8 @@ protected:
 	int checkingLine(void)const;
 
 public:
-	Postfix(const string&);
-	~Postfix();
+	Postfix(void);
+	~Postfix(void);
 
 	void procStr(void);
 	void setString(const string&);

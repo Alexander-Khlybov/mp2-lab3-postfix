@@ -1,6 +1,6 @@
 #include "postfix.h"
 
-Postfix::Postfix(){
+Postfix::Postfix(void){
 	operator_ = new Stack<char>();
 	res_ = new Stack<char>();
 	a = new Stack<VariableType>();
