@@ -79,7 +79,7 @@ template <class KeyType>
 int List<KeyType>::operator== (const List& list)const{
     Node<KeyType>* first1 = first_;
     Node<KeyType>* first2 = list.first_;
-    while (first1 != 0) && (first2 != 0){
+    while ((first1 != 0) && (first2 != 0)){
         if(first1->key_ != first2->key_)
             return 0;
         first1 = first1->next_;
@@ -222,7 +222,7 @@ void List<KeyType>::remove(const KeyType& findKey){
     Node<KeyType>* findNode = find(findKey);
 
     if (first_ == findNode) {
-        first_ == first_->next_;
+        first_ = first_->next_;
         return;
     }
 

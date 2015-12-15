@@ -1,10 +1,10 @@
 #include "postfix.h"
 
-Postfix::Postfix(const string& str = ""){
+Postfix::Postfix(){
 	operator_ = new Stack<char>();
 	res_ = new Stack<char>();
 	a = new Stack<VariableType>();
-	str_ = str;
+	str_ = "";
 	op = 0;
 }
 
@@ -155,7 +155,7 @@ int Postfix::checkingLine(void)const {
 			if((isOperand(temp1)) && (isOperand(temp2)))
 				return 0;
 			if((isOperator(temp1)) && (isOperator(temp2)))
-				if (((temp1 == '(') && (temp2 != ')') && (temp2 != '(') && (temp2 != '-')) || ((temp1 != '(') && (temp2 == ')') && (temp1 != ')')));
+				if (((temp1 == '(') && (temp2 != ')') && (temp2 != '(') && (temp2 != '-')) || ((temp1 != '(') && (temp2 == ')') && (temp1 != ')')))
 					return 0;
 			i = j++;
 		}
