@@ -24,15 +24,15 @@
     <ClInclude Include="..\..\..\include\node.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\postfix.hpp">
+    <ClInclude Include="..\..\..\include\stack.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\stack.hpp">
+    <ClInclude Include="..\..\..\include\postfix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\fictive.cpp">
+    <ClCompile Include="..\..\..\src\postfix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

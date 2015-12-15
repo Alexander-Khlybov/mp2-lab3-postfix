@@ -1,3 +1,3 @@
-#include "postfix.hpp"
+#include "postfix.h"
 
 #include <gtest.h>

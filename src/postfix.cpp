@@ -1,40 +1,14 @@
-#ifndef _POSTFIX_H_
-#define _POSTFIX_H_
-#include "stack.hpp"
+#include "postfix.h"
 
-#define _SPACE_ ' '
-
-typedef double VariableType;
-
-class Postfix {
-private:
-	int rightBr(void);
-	void decreasePriority(int);
-	int  priorietyOperator(const char)const;
-	int  isOperator(const char)const;
-	int  isOperand(const char)const;
-	Stack<char> res_;
-	Stack<char> operator_;
-	Stack<VariableType> a;
-	string str_;
-public:
-	Postfix();
-	~Postfix();
-
-	void procStr(void);
-	void setString(const string&);
-	VariableType calculate(void);
-	void getValuesOfVariables(void);
-};
-
-Postfix::Postfix(){
+Postfix::Postfix(const string& str = ""){
 	operator_ = new Stack<char>();
 	res_ = new Stack<char>();
 	a = new Stack<VariableType>();
+	str_ = str;
+	op = 0;
 }
 
 Postfix::~Postfix(void){
-
 }
 
 int Postfix::rightBr(void){
@@ -63,12 +37,15 @@ void Postfix::procStr(void){
 	if (str_.length() == 0){
 		cout << "Enter the expression" << endl;
 		cin >> str_;
+		if (!checkingLine())
+			throw("Incorrect line.");
 	}
 	int k = 0; // Текущий приоритет
 	int m = 0; // Приоритет последнего элемента в operator_
 	for (int i = 0; i < (int)str_.length(); i++){
 		if (isOperand(str_[i])){
 			res_.push(str_[i]);
+			op++;
 		}
 		else if (isOperator(str_[i])){
 			
@@ -94,9 +71,9 @@ void Postfix::procStr(void){
 		res_.push(operator_.pop());
 }
 
-
 void Postfix::setString(const string& str){
 	str_ = str;
+	checkingLine();
 }
 	
 int Postfix::isOperator(const char key)const{
@@ -113,8 +90,6 @@ int Postfix::isOperator(const char key)const{
 		case '(':
 			return 1;
 		case ')':
-			return 1;
-		case '=':
 			return 1;
 		default:
 			return 0;
@@ -143,10 +118,50 @@ int Postfix::priorietyOperator(const char key)const{
 				return 1;
 			case ')':
 				return 1;
-			case '=':
-				return 0;
 		}
     return -1;
+}
+
+int Postfix::checkingLine(void)const {
+
+	int leftBracket = 0;
+	int rightBracket = 0;
+
+	for (int k = 0; k < str_.length(); k++){
+		if (str_[k] == '(') leftBracket++;
+		if (str_[k] == ')') rightBracket++;
+	}
+
+	if (leftBracket != rightBracket)
+		return 0;
+
+
+	int i = 0;
+	int j = 1;
+	char temp1;
+	char temp2;
+	if (str_.length() > 0)
+		if (isOperator(str_[0]))
+			if ((str_[0] != '-') && (str_[0] != '('))
+				return 0;
+
+	while (j < str_.length()) {
+		if (str_[j] == _SPACE_){
+			j++;
+			continue;
+		} else {
+			temp1 = str_[i];
+			temp2 = str_[j];
+			if((isOperand(temp1)) && (isOperand(temp2)))
+				return 0;
+			if((isOperator(temp1)) && (isOperator(temp2)))
+				if (((temp1 == '(') && (temp2 != ')') && (temp2 != '(') && (temp2 != '-')) || ((temp1 != '(') && (temp2 == ')') && (temp1 != ')')));
+					return 0;
+			i = j++;
+		}
+	}
+
+	return 1;
 }
 
 VariableType Postfix::calculate(void){
@@ -158,4 +173,6 @@ void Postfix::getValuesOfVariables(void){
 
 }
 
-#endif
+void Postfix::printPostfix(void)const {
+
+}

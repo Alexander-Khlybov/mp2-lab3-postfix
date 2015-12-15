@@ -1,0 +1,35 @@
+#ifndef _POSTFIX_H_
+#define _POSTFIX_H_
+#include "stack.hpp"
+
+#define _SPACE_ ' '
+
+typedef double VariableType;
+
+class Postfix {
+private:
+	Stack<char> res_;
+	Stack<char> operator_;
+	Stack<VariableType> a;
+	string str_;
+	int op;
+
+protected:
+	int rightBr(void);
+	void decreasePriority(int);
+	int  priorietyOperator(const char)const;
+	int  isOperator(const char)const;
+	int  isOperand(const char)const;
+	void getValuesOfVariables(void);
+	int checkingLine(void)const;
+
+public:
+	Postfix(const string&);
+	~Postfix();
+
+	void procStr(void);
+	void setString(const string&);
+	void printPostfix(void)const;
+	VariableType calculate(void);
+};
+#endif

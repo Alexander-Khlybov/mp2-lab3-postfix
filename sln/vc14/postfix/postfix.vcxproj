@@ -146,11 +146,11 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\include\list.hpp" />
     <ClInclude Include="..\..\..\include\node.hpp" />
-    <ClInclude Include="..\..\..\include\postfix.hpp" />
+    <ClInclude Include="..\..\..\include\postfix.h" />
     <ClInclude Include="..\..\..\include\stack.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\fictive.cpp" />
+    <ClCompile Include="..\..\..\src\postfix.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
