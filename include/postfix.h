@@ -8,9 +8,9 @@ typedef double VariableType;
 
 class Postfix {
 private:
-	Stack<char> res_;
-	Stack<char> operator_;
-	Stack<VariableType> a;
+	Stack<char>* res_;
+	Stack<char>* operator_;
+	Stack<VariableType>* expResult_;
 	string str_;
 	int op;
 

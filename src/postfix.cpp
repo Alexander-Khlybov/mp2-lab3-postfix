@@ -3,34 +3,37 @@
 Postfix::Postfix(void){
 	operator_ = new Stack<char>();
 	res_ = new Stack<char>();
-	a = new Stack<VariableType>();
+	expResult_ = new Stack<VariableType>();
 	str_ = "";
 	op = 0;
 }
 
 Postfix::~Postfix(void){
+	delete operator_;
+	delete res_;
+	delete expResult_;
 }
 
 int Postfix::rightBr(void){
-	char j = operator_.pop();
+	char j = operator_->pop();
 	while(j != '('){
-		res_.push(j);
-		j =  operator_.pop();
+		res_->push(j);
+		j =  operator_->pop();
 	}
-	j = operator_.pop();
-	operator_.push(j);
+	j = operator_->pop();
+	operator_->push(j);
 	return priorietyOperator(j);
 }
 
 void Postfix::decreasePriority(int k){
-	char j = operator_.pop();
-	while( (k <= priorietyOperator(j)) && (!operator_.isEmpty() )){
-		res_.push(j);
-		j = operator_.pop();
+	char j = operator_->pop();
+	while( (k <= priorietyOperator(j)) && (!operator_->isEmpty() )){
+		res_->push(j);
+		j = operator_->pop();
 	}
 	if (priorietyOperator(j) < k)
-		operator_.push(j);
-	operator_.push(k);
+		operator_->push(j);
+	operator_->push(k);
 }
 
 void Postfix::procStr(void){
@@ -44,7 +47,7 @@ void Postfix::procStr(void){
 	int m = 0; // Приоритет последнего элемента в operator_
 	for (int i = 0; i < (int)str_.length(); i++){
 		if (isOperand(str_[i])){
-			res_.push(str_[i]);
+			res_->push(str_[i]);
 			op++;
 		}
 		else if (isOperator(str_[i])){
@@ -62,13 +65,13 @@ void Postfix::procStr(void){
 			}
 			m = k;
 
-			operator_.push(str_[i]);
+			operator_->push(str_[i]);
 		} else {
 			continue;
 		}
 	}
-	while(!operator_.isEmpty())
-		res_.push(operator_.pop());
+	while(!operator_->isEmpty())
+		res_->push(operator_->pop());
 }
 
 void Postfix::setString(const string& str){
