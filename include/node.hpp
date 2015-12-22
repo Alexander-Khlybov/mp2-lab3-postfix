@@ -15,7 +15,6 @@ public:
 
     Node(void) { next_ = 0; };
     Node(const KeyType& key) { key_ = key; next_ = 0; };
-    ~Node(void) { delete next_; };
 };
 
 #endif
