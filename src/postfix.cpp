@@ -20,8 +20,12 @@ int Postfix::rightBr(void){
 		res_->push(j);
 		j =  operator_->pop();
 	}
-	j = operator_->pop();
-	operator_->push(j);
+    try {
+        j = operator_->pop();
+    }
+    catch (...) {
+        j = '(';
+    }
 	return priorietyOperator(j);
 }
 
@@ -43,12 +47,14 @@ void Postfix::procStr(void){
 		if (!checkingLine())
 			throw("Incorrect line.");
 	}
+
 	int k = 0; // Текущий приоритет
 	int m = 0; // Приоритет последнего элемента в operator_
+
+
 	for (int i = 0; i < (int)str_.length(); i++){
 		if (isOperand(str_[i])){
 			res_->push(str_[i]);
-			op++;
 		}
 		else if (isOperator(str_[i])){
 			
@@ -57,14 +63,12 @@ void Postfix::procStr(void){
 				continue;
 			}
 
-			k = priorietyOperator(str_[i]);
-			if (k < m){
-				decreasePriority(k);
-				m = k;
-				continue;
-			}
-			m = k;
-
+            k = priorietyOperator(str_[i]);
+            if (k < m) {
+                decreasePriority(k);
+            }
+            m = k;
+            
 			operator_->push(str_[i]);
 		} else {
 			continue;
@@ -177,5 +181,12 @@ void Postfix::getValuesOfVariables(void){
 }
 
 void Postfix::printPostfix(void)const {
+    Stack<char>* tmp(res_);
+    Stack<char>* printTmp = new Stack<char>;
 
+    while (!(tmp->isEmpty()))
+        printTmp->push(tmp->pop());
+
+    while (!(printTmp->isEmpty()))
+        cout << printTmp->pop();
 }
