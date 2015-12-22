@@ -6,8 +6,6 @@ template <class KeyType>
 class List { 
 public:
     List(void);
-    List(const Node<KeyType>*);
-    List(const KeyType&);
     List (const List<KeyType>*);
     ~List(void);
 
@@ -42,16 +40,6 @@ private:
 template <class KeyType>
 List<KeyType>::List(void){
     first_ = 0;
-}
-
-template <class KeyType>
-List<KeyType>::List(const Node<KeyType>* node){
-    first_ = new Node<KeyType>(node);
-}
-
-template <class KeyType>
-List<KeyType>::List(const KeyType& key){
-    first_ = new Node<KeyType>(key);
 }
 
 template <class KeyType>
