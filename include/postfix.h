@@ -22,6 +22,7 @@ protected:
 	int  isOperand(const char)const;
 	void getValuesOfVariables(void);
 	int checkingLine(void)const;
+    string rewriteStackToString(void);
 
 public:
 	Postfix(void);
@@ -29,7 +30,7 @@ public:
 
 	void procStr(void);
 	void setString(const string&);
-	void printPostfix(void)const;
+	void printPostfix(void);
 	VariableType calculate(void);
 };
 #endif

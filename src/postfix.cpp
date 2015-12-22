@@ -76,11 +76,13 @@ void Postfix::procStr(void){
 	}
 	while(!operator_->isEmpty())
 		res_->push(operator_->pop());
+    op = 1;
 }
 
 void Postfix::setString(const string& str){
 	str_ = str;
 	checkingLine();
+    op = 0;
 }
 	
 int Postfix::isOperator(const char key)const{
@@ -177,16 +179,26 @@ VariableType Postfix::calculate(void){
 }
 	
 void Postfix::getValuesOfVariables(void){
-
+    
 }
 
-void Postfix::printPostfix(void)const {
+string Postfix::rewriteStackToString(void) {
     Stack<char>* tmp(res_);
-    Stack<char>* printTmp = new Stack<char>;
+    Stack<char>* toStr = new Stack<char>;
+    string str = "";
 
     while (!(tmp->isEmpty()))
-        printTmp->push(tmp->pop());
+        toStr->push(tmp->pop());
 
-    while (!(printTmp->isEmpty()))
-        cout << printTmp->pop();
+    while (!(toStr->isEmpty()))
+        str += toStr->pop();
+    return str;
+}
+
+void Postfix::printPostfix(void) {
+    if (op) {
+        cout << rewriteStackToString() << endl;
+    } else {
+        cout << "The source string was not processed." << endl;
+    }
 }
