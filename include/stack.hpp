@@ -6,7 +6,7 @@ template <class KeyType>
 class Stack {
 public:
 	Stack(void);
-	Stack(const Stack<KeyType>*);
+	Stack(const Stack<KeyType>&);
 	~Stack(void);
 
     int operator== (const Stack&)const;
@@ -34,8 +34,8 @@ Stack<KeyType>::Stack(){
 }
 
 template <class KeyType>
-Stack<KeyType>::Stack(const Stack<KeyType>* stack){
-	list_ = new List<KeyType>(stack->list_);
+Stack<KeyType>::Stack(const Stack<KeyType>& stack){
+	list_ = new List<KeyType>(stack.list);
 }
 
 template <class KeyType>
@@ -57,7 +57,7 @@ template <class KeyType>
 int Stack<KeyType>::isFull(void) const{
 	Node<KeyType> *node;
 	try{
-		node = new Node<KeyType>();
+		node = new Node<KeyType>;
 	} catch (...) {
 		return 1;
 	}
