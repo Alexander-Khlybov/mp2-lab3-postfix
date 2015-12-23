@@ -28,7 +28,7 @@ public:
 	~Postfix(void);
 
 	void procStr(void);
-	void setString(const string&);
+	int setString(const string&);
 	void printPostfix(void);
 	VariableType calculate(void);
 };

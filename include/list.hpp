@@ -184,7 +184,6 @@ void List<KeyType>::remove(const KeyType& findKey){
     while (first->next_ != findNode)
         first = first->next_;
     first->next_ = findNode->next_;
-    delete first;
 }
 
 // получение указатеря на первый узел списка

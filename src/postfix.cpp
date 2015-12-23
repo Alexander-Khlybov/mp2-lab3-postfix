@@ -45,7 +45,7 @@ void Postfix::procStr(void){
 	if (str_.length() == 0){
 		cout << "Enter the expression" << endl;
 		cin >> str_;
-		if (!checkingLine())
+		if (checkingLine())
 			throw("Incorrect line.");
 	}
 
@@ -90,10 +90,11 @@ void Postfix::procStr(void){
     op = 1;
 }
 
-void Postfix::setString(const string& str){
+int Postfix::setString(const string& str){
 	str_ = str;
-	checkingLine();
+	int t = checkingLine();
     op = 0;
+    return t;
 }
 	
 int Postfix::isOperator(const char key)const{
@@ -153,7 +154,7 @@ int Postfix::checkingLine(void)const {
 	}
 
 	if (leftBracket != rightBracket)
-		return 0;
+		return 1;
 
 
 	int i = 0;
@@ -163,7 +164,7 @@ int Postfix::checkingLine(void)const {
 	if (str_.length() > 0)
 		if (isOperator(str_[0]))
 			if ((str_[0] != '-') && (str_[0] != '('))
-				return 0;
+				return 1;
 
 	while (j < str_.length()) {
 		if (str_[j] == _SPACE_){
@@ -173,15 +174,15 @@ int Postfix::checkingLine(void)const {
 			temp1 = str_[i];
 			temp2 = str_[j];
 			if((isOperand(temp1)) && (isOperand(temp2)))
-				return 0;
+				return 1;
 			if((isOperator(temp1)) && (isOperator(temp2)))
 				if (((temp1 == '(') && (temp2 != ')') && (temp2 != '(') && (temp2 != '-')) || ((temp1 != '(') && (temp2 == ')') && (temp1 != ')')))
-					return 0;
+					return 1;
 			i = j++;
 		}
 	}
 
-	return 1;
+	return 0;
 }
 
 VariableType Postfix::calculate(void){

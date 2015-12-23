@@ -35,7 +35,7 @@ Stack<KeyType>::Stack(){
 
 template <class KeyType>
 Stack<KeyType>::Stack(const Stack<KeyType>& stack){
-	list_ = new List<KeyType>(stack.list);
+	list_ = new List<KeyType>(stack->list_);
 }
 
 template <class KeyType>
