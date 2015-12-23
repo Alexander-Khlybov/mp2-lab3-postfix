@@ -33,6 +33,8 @@ public:
 // получение указатеря на первый узел списка
     Node<KeyType>* getFirst  (void) const;
 
+// печать списка
+    void print(void)const;
 
 private:
 // указатель на первое звено списка
@@ -191,5 +193,16 @@ template <class KeyType>
 Node<KeyType>* List<KeyType>::getFirst(void) const{
     return first_;
 }
+
+template <class KeyType>
+void List<KeyType>::print(void)const {
+    Node<KeyType>* first = first_;
+    while (first != 0) {
+        cout << first->key_ << " -> ";
+        first = first->next_;
+    }
+    cout << "-|///" << endl;
+}
+
 
 #endif
