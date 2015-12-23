@@ -12,6 +12,7 @@ protected:
 	void checkBrackets(const string&)const;
 
 public:
-	string rewriteLineFromInfixToPostfix(const string&);
+	string rewriteLineFromInfixToPostfix(const string&)const;
+	VariableType calculate(const string&)const;
 };
 #endif

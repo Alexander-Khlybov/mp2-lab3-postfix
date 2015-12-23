@@ -12,7 +12,7 @@ void Postfix::checkBrackets(const string& s)const{
 		throw("Incorrect line.");
 }
 
-string Postfix::rewriteLineFromInfixToPostfix(const string& infixString){
+string Postfix::rewriteLineFromInfixToPostfix(const string& infixString)const{
 
 if(!infixString.length()){
 	throw("String is empty.");
@@ -23,7 +23,7 @@ checkBrackets(infixString);
 map <char, int> operations; 
 operations['*'] = 3; operations['/'] = 3; 
 operations['+'] = 2; operations['-'] = 2; 
-operations['('] = 1;
+operations['('] = 1; operations['='] = 0;
 
 Stack<char> result;
 Stack<char> operationsStack;
@@ -98,4 +98,59 @@ while (!operationsStack.isEmpty()) {
 	resultString += operationsStack.pop();
 }
 return resultString;
+}
+
+VariableType Postfix::calculate(const string& postfixString)const{
+	if (postfixString == "")
+		throw("String is empty.");
+
+	Stack<VariableType> result;
+	char tmp;
+	VariableType leftOperand;
+	VariableType rightOperand;
+	map<char, VariableType> values;
+
+	for (int i = 0; i < postfixString.length(); i++){
+		tmp = postfixString[i];
+
+		if (postfixString[postfixString.length() - 1] == '=')
+			values[postfixString[0]] = 0;
+
+		if (((tmp >= 'a') && (tmp <= 'z')) || ((tmp >= 'A') && (tmp <= 'Z'))){
+			if (!values.count(tmp)){
+				cout << "Enter the " << tmp << ": ";
+				cin >> values[tmp];
+			}
+			result.push(values[tmp]);
+			continue;
+		}
+
+		if (result.isEmpty())
+			throw ("Error.");
+
+		rightOperand = result.pop();
+		if (result.isEmpty())
+			throw ("Error.");
+		
+		leftOperand = result.pop();
+		switch (tmp){
+		case '+':
+			result.push(leftOperand + rightOperand); 
+			break;
+		case '-':
+			result.push(leftOperand - rightOperand); 
+			break;
+		case '*':
+			result.push(leftOperand * rightOperand); 
+			break;
+		case '/':
+			result.push(leftOperand / rightOperand); 
+			break;
+		}
+	}
+
+	VariableType res = result.pop();
+	if (!result.isEmpty())
+		throw("Incorrect line.");
+	return res;
 }
