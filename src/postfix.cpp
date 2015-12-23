@@ -1,239 +1,156 @@
 #include "postfix.h"
+void Postfix::checkBrackets(const string& s)const{
+	int leftBrackets = 0;
+	int rightBrackets = 0;
 
-Postfix::Postfix(void){
-	operator_ = new Stack<char>();
-	res_ = new Stack<char>();
-	expResult_ = new Stack<VariableType>();
-	str_ = "";
-    resStr_ = "";
-	op = 0;
-}
-
-Postfix::~Postfix(void){
-	delete operator_;
-	delete res_;
-	delete expResult_;
-}
-
-int Postfix::rightBr(void){
-	char j = operator_->pop();
-	while(j != '('){
-		res_->push(j);
-		j =  operator_->pop();
-	}
-    try {
-        j = operator_->pop();
-    }
-    catch (...) {
-        j = '(';
-    }
-	return priorietyOperator(j);
-}
-
-void Postfix::decreasePriority(int k){
-	char j = operator_->pop();
-	while( (k <= priorietyOperator(j)) && (!operator_->isEmpty() )){
-		res_->push(j);
-		j = operator_->pop();
-	}
-	if (priorietyOperator(j) < k)
-		operator_->push(j);
-	operator_->push(k);
-}
-
-void Postfix::procStr(void){
-	if (str_.length() == 0){
-		cout << "Enter the expression" << endl;
-		cin >> str_;
-		if (checkingLine())
-			throw("Incorrect line.");
+	for (int i = 0; i < s.length(); i++){
+		if (s[i] == '(') leftBrackets++;
+		if (s[i] == ')') rightBrackets++;
 	}
 
-	int k = 0; // Текущий приоритет
-	int m = 0; // Приоритет последнего элемента в operator_
+	if(leftBrackets != rightBrackets)
+		throw("Incorrect line.");
+}
 
+string Postfix::rewriteLineFromInfixToPostfix(const string& infixString)const{
 
-	for (int i = 0; i < (int)str_.length(); i++){
-		if (isOperand(str_[i])){
-			res_->push(str_[i]);
-		}
-		else if (isOperator(str_[i])){
-			
-			if (str_[i] == ')'){
-				m = rightBr();
-				continue;
+if(!infixString.length()){
+	throw("String is empty.");
+}
+
+checkBrackets(infixString);
+
+map <char, int> operations; 
+operations['*'] = 3; operations['/'] = 3; 
+operations['+'] = 2; operations['-'] = 2; 
+operations['('] = 1; operations['='] = 0;
+
+Stack<char> result;
+Stack<char> operationsStack;
+
+char temp;
+
+for (int i = 0; i < infixString.length(); i++){
+
+	temp = infixString[i];
+
+    if (operations.count(temp)) {
+        if ((!operationsStack.isEmpty())) {
+            char t = operationsStack.pop();
+            operationsStack.push(t);
+
+            if ((operations[temp] <= operations[t]) && (temp != '('))
+                while (operations[temp] <= operations[t]) {
+                    operationsStack.push(operationsStack.pop());
+
+                    if (!operationsStack.isEmpty()) {
+                        t = operationsStack.pop();
+                        operationsStack.push(t);
+                    }
+                    else { 
+                        break; 
+                    }
+                }
+        }
+
+		operationsStack.push(temp);
+		continue;
+	}
+
+	if (((temp >= 'a') && (temp <= 'z')) || ((temp >= 'A') && (temp <= 'Z'))) {						
+		result.push(temp);
+		continue;
+	}
+
+	if (temp == ')') {
+		if (!operationsStack.isEmpty()){
+			char t = operationsStack.pop();
+			operationsStack.push(t);
+
+			while (t != '('){
+				result.push(t);
+				if (!operationsStack.isEmpty()){
+					char t = operationsStack.pop();
+					operationsStack.push(t);
+				} else {break;}
 			}
 
-            k = priorietyOperator(str_[i]);
-            if (k < m) {
-                decreasePriority(k);
-            }
-            m = k;
-            
-			operator_->push(str_[i]);
-		} else {
+			operationsStack.pop();
+			continue;
+		}																		
+	}
+	throw "Incorrect symbol.";
+}
+
+while (!operationsStack.isEmpty()){
+	result.push(operationsStack.pop());
+}
+
+if (result.isEmpty())
+	throw "Line doesn't contain an expression.";
+
+string resultString  ="";
+
+while (!result.isEmpty())
+	operationsStack.push(result.pop());
+
+while (!operationsStack.isEmpty()) {
+	resultString += operationsStack.pop();
+}
+return resultString;
+}
+
+VariableType Postfix::calculate(const string& postfixString)const{
+	if (postfixString == "")
+		throw("String is empty.");
+
+	Stack<VariableType> result;
+	char tmp;
+	VariableType leftOperand;
+	VariableType rightOperand;
+	map<char, VariableType> values;
+
+	for (int i = 0; i < postfixString.length(); i++){
+		tmp = postfixString[i];
+
+		if (postfixString[postfixString.length() - 1] == '=')
+			values[postfixString[0]] = 0;
+
+		if (((tmp >= 'a') && (tmp <= 'z')) || ((tmp >= 'A') && (tmp <= 'Z'))){
+			if (!values.count(tmp)){
+				cout << "Enter the " << tmp << ": ";
+				cin >> values[tmp];
+			}
+			result.push(values[tmp]);
 			continue;
 		}
-	}
-	while(!operator_->isEmpty())
-		res_->push(operator_->pop());
 
+		if (result.isEmpty())
+			throw ("Error.");
 
-    Stack<char>* tmp(res_);
-    Stack<char>* toStr = new Stack<char>;
-
-    while (!(tmp->isEmpty()))
-        toStr->push(tmp->pop());
-
-    while (!(toStr->isEmpty()))
-        resStr_ += toStr->pop();
-    op = 1;
-}
-
-int Postfix::setString(const string& str){
-	str_ = str;
-	int t = checkingLine();
-    op = 0;
-    return t;
-}
-	
-int Postfix::isOperator(const char key)const{
-	switch (key)
-	{
+		rightOperand = result.pop();
+		if (result.isEmpty())
+			throw ("Error.");
+		
+		leftOperand = result.pop();
+		switch (tmp){
 		case '+':
-			return 1;
-		case '-':
-			return 1;
-		case '*':
-			return 1;
-		case '/':
-			return 1;
-		case '(':
-			return 1;
-		case ')':
-			return 1;
-		default:
-			return 0;
-	}
-}
-	
-int Postfix::isOperand(const char key)const{
-	if ((isOperator(key)) || (key == _SPACE_))
-		return 0;
-	return 1;
-}
-
-int Postfix::priorietyOperator(const char key)const{
-	if (isOperator(key))
-		switch (key)
-		{
-			case '+':
-				return 2;
-			case '-':
-				return 2;
-			case '*':
-				return 3;
-			case '/':
-				return 3;
-			case '(':
-				return 1;
-			case ')':
-				return 1;
-		}
-    return -1;
-}
-
-int Postfix::checkingLine(void)const {
-
-	int leftBracket = 0;
-	int rightBracket = 0;
-
-	for (int k = 0; k < str_.length(); k++){
-		if (str_[k] == '(') leftBracket++;
-		if (str_[k] == ')') rightBracket++;
-	}
-
-	if (leftBracket != rightBracket)
-		return 1;
-
-
-	int i = 0;
-	int j = 1;
-	char temp1;
-	char temp2;
-	if (str_.length() > 0)
-		if (isOperator(str_[0]))
-			if ((str_[0] != '-') && (str_[0] != '('))
-				return 1;
-
-	while (j < str_.length()) {
-		if (str_[j] == _SPACE_){
-			j++;
-			continue;
-		} else {
-			temp1 = str_[i];
-			temp2 = str_[j];
-			if((isOperand(temp1)) && (isOperand(temp2)))
-				return 1;
-			if((isOperator(temp1)) && (isOperator(temp2)))
-				if (((temp1 == '(') && (temp2 != ')') && (temp2 != '(') && (temp2 != '-')) || ((temp1 != '(') && (temp2 == ')') && (temp1 != ')')) || ((temp1 == '-') && ((temp2 == '*') || (temp2 == '/') || (temp2 == '+') || (temp2 == '-'))))
-					return 1;
-			i = j++;
-		}
-	}
-
-	return 0;
-}
-
-VariableType Postfix::calculate(void){
-	if (!op)
-		throw("No data.");
-
-	VariableType leftOperand = 0, rightOperand = 0, value_ = 0;
-
-	for (int i = 0; i < resStr_.length(); i++){
-
-		if (isOperand(resStr_[i])){
-			cout << "Enter the '" << resStr_[i] << "'" << endl;
-			cin >> value_;
-			expResult_->push(value_);
-			continue;
-		}
-
-		if (expResult_->isEmpty())
-			throw("Error.");
-		leftOperand = expResult_->pop();
-		if (expResult_->isEmpty())
-            if (resStr_[i] != '-') {
-                leftOperand = -leftOperand;
-                expResult_->push(leftOperand);
-                continue;
-            } else
-    			throw("Error.");
-		rightOperand = expResult_->pop();
-
-		switch (resStr_[i]){
-		case '+':
-			expResult_->push(leftOperand + rightOperand);
+			result.push(leftOperand + rightOperand); 
 			break;
 		case '-':
-			expResult_->push(leftOperand - rightOperand); 
+			result.push(leftOperand - rightOperand); 
 			break;
 		case '*':
-			expResult_->push(leftOperand * rightOperand); 
+			result.push(leftOperand * rightOperand); 
 			break;
 		case '/':
-			expResult_->push(leftOperand / rightOperand); 
+			result.push(leftOperand / rightOperand); 
 			break;
 		}
-   	}
-	return expResult_->pop();
-}
+	}
 
-void Postfix::printPostfix(void) {
-    if (op) {
-        cout << resStr_ << endl;
-    } else {
-        cout << "The source string was not processed." << endl;
-    }
+	VariableType res = result.pop();
+	if (!result.isEmpty())
+		throw("Incorrect line.");
+	return res;
 }
