@@ -176,7 +176,7 @@ int Postfix::checkingLine(void)const {
 			if((isOperand(temp1)) && (isOperand(temp2)))
 				return 1;
 			if((isOperator(temp1)) && (isOperator(temp2)))
-				if (((temp1 == '(') && (temp2 != ')') && (temp2 != '(') && (temp2 != '-')) || ((temp1 != '(') && (temp2 == ')') && (temp1 != ')')))
+				if (((temp1 == '(') && (temp2 != ')') && (temp2 != '(') && (temp2 != '-')) || ((temp1 != '(') && (temp2 == ')') && (temp1 != ')')) || ((temp1 == '-') && ((temp2 == '*') || (temp2 == '/') || (temp2 == '+') || (temp2 == '-'))))
 					return 1;
 			i = j++;
 		}

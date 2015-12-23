@@ -2,9 +2,9 @@
 
 int main(void) {
     string str = "";
-    cout << "Enter the arithmetic expression:" << endl;
+    cout << "Enter the arithmetic expression: (\\ - is end of line)" << endl;
     char t;
-    cin >> str;
+    cin >> t;
 
     // цикл позволяет писать строку с пробелами.
     while (t != '\\') {

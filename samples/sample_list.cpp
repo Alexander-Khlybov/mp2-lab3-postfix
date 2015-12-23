@@ -18,7 +18,7 @@ int main(void) {
     list->print();
     cout << "remove" << endl;
 
-    list->remove(2);
+    list->remove(1);
     list->print();
         cout << endl << endl;
     return 0;}
