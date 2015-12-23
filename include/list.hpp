@@ -53,7 +53,7 @@ template <class KeyType>
 List<KeyType>::List(const List<KeyType>& list){
     
     first_ = 0;
-    Node<KeyType>* tmp = list->first_;
+    Node<KeyType>* tmp = list.first_;
     while (tmp != 0){
         pushEnd(tmp->key_);
         tmp = tmp->next_;
