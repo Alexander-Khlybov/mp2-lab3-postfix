@@ -35,7 +35,7 @@ Stack<KeyType>::Stack(){
 
 template <class KeyType>
 Stack<KeyType>::Stack(const Stack<KeyType>& stack){
-	list_ = new List<KeyType>(stack->list_);
+	list_ = new List<KeyType>(*(stack.list_));
 }
 
 template <class KeyType>
@@ -45,12 +45,12 @@ Stack<KeyType>::~Stack(void){
 
 template <class KeyType>
 int Stack<KeyType>::operator== (const Stack& stack)const{
-	return (list_ == stack.list_);
+	return (*list_ == *(stack.list_));
 }
 
 template <class KeyType>
 int Stack<KeyType>::operator!= (const Stack& stack)const{
-	return (list_ != stack.list_);
+	return (*list_ != *(stack.list_));
 }
 
 template <class KeyType>

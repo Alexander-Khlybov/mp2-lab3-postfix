@@ -37,7 +37,7 @@ TEST(Stack, compare_equal_stacks_return_true) {
     s.push(3);
     s1.push(4);
     s.push(4);
-    EXPECT_EQ(1, s == s1);
+    EXPECT_EQ(s, s1);
 }
 
 TEST(Stack, compare_non_equal_stacks_return_false) {
@@ -47,5 +47,20 @@ TEST(Stack, compare_non_equal_stacks_return_false) {
     s->push(3);
     s1->push(4);
     s->push(2);
-    EXPECT_EQ(0, *s == *s1);
+    EXPECT_NE(*s, *s1);
+}
+
+TEST(Stack, can_copy_stack) {
+    Stack<int>* s = new Stack<int>;
+    s->push(3);
+    s->push(2);
+    ASSERT_NO_THROW(Stack<int>* s1 = new Stack<int>(*s));
+}
+
+TEST(Stack, copied_stack_is_equal_to_source_one) {
+    Stack<int>* s = new Stack<int>;
+    s->push(3);
+    s->push(2);
+    Stack<int>* s1 = new Stack<int>(*s);
+    EXPECT_EQ(*s, *s1);
 }
