@@ -160,10 +160,10 @@ TEST(List, remove_works_properly) {
     list->push(3);
     list->push(5);
     list->push(4);
-    list->remove(5);
+    list->remove(4);
     List<int>* list1 = new List<int>;
     list1->push(3);
-    list1->push(4);
+    list1->push(5);
     EXPECT_EQ(*list1, *list);
 }
 
@@ -172,4 +172,30 @@ TEST(List, throws_when_findKey_does_not_exist_RM) {
     list->push(3);
     list->push(4);
     ASSERT_ANY_THROW(list->remove(7));
+}
+
+TEST(List, can_push_key_before_findkey) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(4);
+    ASSERT_NO_THROW(list->pushBefore(4, 5));
+}
+
+TEST(List, pushBefore_works_properly) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(4);
+    list->pushBefore(4, 5);
+    List<int>* list1 = new List<int>;
+    list1->push(3);
+    list1->push(4);
+    list1->push(5);
+    EXPECT_EQ(*list1, *list);
+}
+
+TEST(List, throws_when_findKey_does_not_exist_PB) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(4);
+    ASSERT_ANY_THROW(list->pushBefore(7, 5));
 }
