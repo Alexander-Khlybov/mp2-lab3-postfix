@@ -12,6 +12,7 @@ private:
 	Stack<char>* operator_;
 	Stack<VariableType>* expResult_;
 	string str_;
+    string resStr_;
 	int op;
 
 protected:
@@ -20,9 +21,7 @@ protected:
 	int  priorietyOperator(const char)const;
 	int  isOperator(const char)const;
 	int  isOperand(const char)const;
-	void getValuesOfVariables(void);
 	int checkingLine(void)const;
-    string rewriteStackToString(void);
 
 public:
 	Postfix(void);

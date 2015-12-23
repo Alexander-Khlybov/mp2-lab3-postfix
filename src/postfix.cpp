@@ -5,6 +5,7 @@ Postfix::Postfix(void){
 	res_ = new Stack<char>();
 	expResult_ = new Stack<VariableType>();
 	str_ = "";
+    resStr_ = "";
 	op = 0;
 }
 
@@ -76,6 +77,16 @@ void Postfix::procStr(void){
 	}
 	while(!operator_->isEmpty())
 		res_->push(operator_->pop());
+
+
+    Stack<char>* tmp(res_);
+    Stack<char>* toStr = new Stack<char>;
+
+    while (!(tmp->isEmpty()))
+        toStr->push(tmp->pop());
+
+    while (!(toStr->isEmpty()))
+        resStr_ += toStr->pop();
     op = 1;
 }
 
@@ -174,30 +185,53 @@ int Postfix::checkingLine(void)const {
 }
 
 VariableType Postfix::calculate(void){
-	VariableType a = 0;
-	return a;
-}
-	
-void Postfix::getValuesOfVariables(void){
-    
-}
+	if (!op)
+		throw("No data.");
 
-string Postfix::rewriteStackToString(void) {
-    Stack<char>* tmp(res_);
-    Stack<char>* toStr = new Stack<char>;
-    string str = "";
+	VariableType leftOperand = 0, rightOperand = 0, value_ = 0;
 
-    while (!(tmp->isEmpty()))
-        toStr->push(tmp->pop());
+	for (int i = 0; i < resStr_.length(); i++){
 
-    while (!(toStr->isEmpty()))
-        str += toStr->pop();
-    return str;
+		if (isOperand(resStr_[i])){
+			cout << "Enter the '" << resStr_[i] << "'" << endl;
+			cin >> value_;
+			expResult_->push(value_);
+			continue;
+		}
+
+		if (expResult_->isEmpty())
+			throw("Error.");
+		leftOperand = expResult_->pop();
+		if (expResult_->isEmpty())
+            if (resStr_[i] != '-') {
+                leftOperand = -leftOperand;
+                expResult_->push(leftOperand);
+                continue;
+            } else
+    			throw("Error.");
+		rightOperand = expResult_->pop();
+
+		switch (resStr_[i]){
+		case '+':
+			expResult_->push(leftOperand + rightOperand);
+			break;
+		case '-':
+			expResult_->push(leftOperand - rightOperand); 
+			break;
+		case '*':
+			expResult_->push(leftOperand * rightOperand); 
+			break;
+		case '/':
+			expResult_->push(leftOperand / rightOperand); 
+			break;
+		}
+   	}
+	return expResult_->pop();
 }
 
 void Postfix::printPostfix(void) {
     if (op) {
-        cout << rewriteStackToString() << endl;
+        cout << resStr_ << endl;
     } else {
         cout << "The source string was not processed." << endl;
     }
