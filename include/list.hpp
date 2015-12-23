@@ -19,16 +19,13 @@ public:
     Node<KeyType>* find      (const KeyType&) const;
 
 // добавление элемента с ключом key к началу списка
-    int  push       (const KeyType&);
+    void  push       (const KeyType&);
 
 // добавление элемента с ключом key после элемента с ключом findkey
-    int  pushAfter  (const KeyType&, const KeyType&);
-
-// добавление элемента с ключом key до элемента с ключом findkey
-    int  pushBefore (const KeyType&, const KeyType&);
+    void  pushAfter  (const KeyType&, const KeyType&);
 
 // добавление элемента с ключом key в конец списка
-    int  pushEnd   (const KeyType&);
+    void  pushEnd   (const KeyType&);
 
 // удаление элемента с ключом key
     void  remove    (const KeyType&);
@@ -117,32 +114,25 @@ Node<KeyType>* List<KeyType>::find(const KeyType& key) const{
 
 // добавление элемента с ключом key к началу списка
 template <class KeyType>
-int List<KeyType>::push(const KeyType& key){
+void List<KeyType>::push(const KeyType& key){
     Node<KeyType>* node;
     try {
         node = new Node<KeyType>(key);
     }
     catch (...) {
-        return 1;
+        throw("No memory.");
     }
     
     node->next_ = first_;
     first_ = node;
-
-    return 0;
 }
 
 // добавление элемента с ключом key после элемента с ключом findkey
 template <class KeyType>
-int List<KeyType>::pushAfter(const KeyType& findKey, const KeyType& key){
+void List<KeyType>::pushAfter(const KeyType& findKey, const KeyType& key){
     Node<KeyType>* firstOccurrence;
     
-    try {
-        firstOccurrence = find(findKey);
-    }
-    catch (...) {
-        return 1;
-    }
+    firstOccurrence = find(findKey);
 
     Node<KeyType>* tmp = firstOccurrence->next_;
 
@@ -150,62 +140,26 @@ int List<KeyType>::pushAfter(const KeyType& findKey, const KeyType& key){
     try{
         node = new Node<KeyType>(key);
     } catch (...) {
-        return 1;
+        throw("No memory.");
     }
 
     firstOccurrence->next_ = node;
     node->next_ = tmp;
-
-    return 0;
-}
-
-// добавление элемента с ключом key до элемента с ключом findkey
-template <class KeyType>
-int List<KeyType>::pushBefore(const KeyType& findKey, const KeyType& key){
-    if (first_ == 0)
-        throw("List doesn't exist");
-
-    if (first_->key_ == key)
-        return push(key);
-
-    if (first_->next_ == 0)
-        throw("findKey wasn't found.");
-
-    Node<KeyType>* prevNode = first_;
-    Node<KeyType>* node = first_->next_;
-
-    while ( (node->next_ != 0) && (node->key_ != key) ) {
-        prevNode = node;
-        node = prevNode->next_;
-    } 
-
-    if ( (node->next_ == 0) && (node->key_ != key) )
-        throw("findKey wasn't found");
-
-    Node<KeyType> *tmp;
-    try{
-        tmp = new Node<KeyType>(key);
-    } catch (...) {
-        return 1;
-    }
-
-    prevNode->next_ = tmp;
-    tmp->next_ = node;
-
-    return 0;
 }
 
 // добавление элемента с ключом key в конец списка
 template <class KeyType>
-int List<KeyType>::pushEnd(const KeyType& key){
-    if (first_ == 0)
-        return push(key);
+void List<KeyType>::pushEnd(const KeyType& key){
+    if (first_ == 0) {
+        push(key);
+        return;
+    }
 
     Node<KeyType>* node;
     try {
         node = new Node<KeyType>(key);
     } catch (...) {
-        return 1;
+        throw("No memory.");
     }
 
     Node<KeyType>* first = first_;
@@ -214,8 +168,6 @@ int List<KeyType>::pushEnd(const KeyType& key){
         first = first->next_;
         
     first->next_ = node;
-
-    return 0;
 }
 
 // удаление элемента с ключом key

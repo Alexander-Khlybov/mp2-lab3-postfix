@@ -17,14 +17,6 @@ TEST(Node, created_node_by_key_is_equal_to_key) {
     EXPECT_EQ(2, node->key_);
     EXPECT_EQ(0, node->next_);
 }
-/*
-List(const List<KeyType>&);
-Node<KeyType>* find(const KeyType&) const;
-int  pushAfter(const KeyType&, const KeyType&);
-int  pushBefore(const KeyType&, const KeyType&);
-int  pushEnd(const KeyType&);
-void  remove(const KeyType&);
-*/
 
 TEST(List, can_create_list) {
     List<int>* list;
@@ -41,12 +33,12 @@ TEST(List, created_list_is_empty) {
     EXPECT_EQ(0, list->getFirst());
 }
 
-TEST(Lit, can_push_key) {
+TEST(List, can_push_key) {
     List<int>* list = new List<int>;
     ASSERT_NO_THROW(list->push(2));
 }
 
-TEST(Lit, push_key) {
+TEST(List, push_key) {
     List<int>* list = new List<int>;
     list->push(2);
     list->push(3);
@@ -82,10 +74,102 @@ TEST(List, can_copy_list) {
     ASSERT_NO_THROW(List<int>* list1 = new List<int>(*list));
 }
 
-TEST(List, copied_list_is_equal_to_soutce_one) {
+TEST(List, copied_list_is_equal_to_source_one) {
     List<int>* list = new List<int>;
     list->push(3);
     list->push(4);
     List<int>* list1 = new List<int>(*list);
     EXPECT_EQ(*list, *list1);
+}
+
+TEST(List, can_find_key) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(4);
+    ASSERT_NO_THROW(list->find(3));
+}
+
+TEST(List, find_return_pNode) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(4);
+    EXPECT_EQ(list->getFirst()->next_, list->find(3));
+}
+
+TEST(List, throws_when_key_was_not_found) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(4);
+    ASSERT_ANY_THROW(list->find(5));
+}
+
+TEST(List, can_push_key_after_findkey) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(4);
+    ASSERT_NO_THROW(list->pushAfter(4, 5));
+}
+
+TEST(List, pushAfter_works_properly) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(4);
+    list->pushAfter(4, 5);
+    List<int>* list1 = new List<int>;
+    list1->push(3);
+    list1->push(5);
+    list1->push(4);
+    EXPECT_EQ(*list1, *list);
+}
+
+TEST(List, throws_when_findKey_does_not_exist_PA) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(4);
+    ASSERT_ANY_THROW(list->pushAfter(7, 5));
+}
+
+TEST(List, can_push_key_at_the_end_of_list) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(4);
+    ASSERT_NO_THROW(list->pushEnd(5));
+}
+
+TEST(List, pushEnd_works_properly) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(4);
+    list->pushEnd(5);
+    List<int>* list1 = new List<int>;
+    list1->push(5);
+    list1->push(3);
+    list1->push(4);
+    EXPECT_EQ(*list1, *list);
+}
+
+TEST(List, can_remove_node_by_key) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(4);
+    ASSERT_NO_THROW(list->remove(3));
+}
+
+TEST(List, remove_works_properly) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(5);
+    list->push(4);
+    list->remove(5);
+    List<int>* list1 = new List<int>;
+    list1->push(3);
+    list1->push(4);
+    EXPECT_EQ(*list1, *list);
+}
+
+TEST(List, throws_when_findKey_does_not_exist_RM) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(4);
+    ASSERT_ANY_THROW(list->remove(7));
 }
