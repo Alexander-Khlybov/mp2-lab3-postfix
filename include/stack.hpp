@@ -23,6 +23,9 @@ public:
 	
 	// Взять элемент из стека.
 	KeyType pop(void);
+
+    // Печать стека
+    void print(void)const;
 private:
 	List<KeyType>* list_;
 };
@@ -35,7 +38,7 @@ Stack<KeyType>::Stack(){
 
 template <class KeyType>
 Stack<KeyType>::Stack(const Stack<KeyType>& stack){
-	list_ = new List<KeyType>(stack.list);
+	list_ = new List<KeyType>(*(stack.list_));
 }
 
 template <class KeyType>
@@ -45,12 +48,12 @@ Stack<KeyType>::~Stack(void){
 
 template <class KeyType>
 int Stack<KeyType>::operator== (const Stack& stack)const{
-	return (list_ == stack.list_);
+	return (*list_ == *(stack.list_));
 }
 
 template <class KeyType>
 int Stack<KeyType>::operator!= (const Stack& stack)const{
-	return (list_ != stack.list_);
+	return (*list_ != *(stack.list_));
 }
 
 template <class KeyType>
@@ -86,5 +89,13 @@ KeyType Stack<KeyType>::pop(void){
 	return tmp;
 }
 
+template <class KeyType>
+void Stack<KeyType>::print(void)const {
+    Stack<KeyType>* s = new Stack<KeyType>(*this);
+
+    while (!(s->isEmpty()))
+        cout << s->pop() << endl;
+
+}
 
 #endif
