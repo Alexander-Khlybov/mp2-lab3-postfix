@@ -3,19 +3,22 @@
 int main(void) {
     
     List<int> *list = new List<int>;
+    cout << "initial" << endl;
+    list->print();
+    cout << "push" << endl;
     list->push(1);
+    list->print();
+    cout << "pushEnd" << endl;
+
     list->pushEnd(3);
+    list->print();
+    cout << "pushAfter" << endl;
+
     list->pushAfter(1, 2);
-    Node<int>* first = list->getFirst();
-    while (first != 0) {
-        cout << first->key_ << " - ";
-        first = first->next_;
-    }
+    list->print();
+    cout << "remove" << endl;
+
     list->remove(2);
-    cout << endl << endl;
-    first = list->getFirst();
-    while (first != 0) {
-        cout << first->key_ << " - ";
-        first = first->next_;
-    }
+    list->print();
+        cout << endl << endl;
     return 0;}
