@@ -21,6 +21,9 @@ public:
 // добавление элемента с ключом key к началу списка
     void  push       (const KeyType&);
 
+// добавление элемента с ключом key перед элементом с ключом findKey
+    void  pushBefore  (const KeyType&, const KeyType&);
+
 // добавление элемента с ключом key после элемента с ключом findkey
     void  pushAfter  (const KeyType&, const KeyType&);
 
@@ -127,6 +130,26 @@ void List<KeyType>::push(const KeyType& key){
     
     node->next_ = first_;
     first_ = node;
+}
+
+// добавление элемента с ключом key перед элементом с ключом findKey
+template <class KeyType>
+void List<KeyType>::pushBefore  (const KeyType& findKey, const KeyType& key){
+    Node<KeyType>* findNode = find(findKey);
+
+    if (first_ == findNode) {
+        push(key);
+        return;
+    }
+
+    Node<KeyType>* previousNode = first_;
+    while (previousNode->next_ != findNode)
+        previousNode = previousNode->next_;
+
+    Node<KeyType>* temporaryAddress = previousNode->next_;
+    Node<KeyType>* tmpNodeKey = new Node<KeyType>(key);
+    previousNode->next_ = tmpNodeKey;
+    tmpNodeKey->next_ = temporaryAddress->next_;
 }
 
 // добавление элемента с ключом key после элемента с ключом findkey
