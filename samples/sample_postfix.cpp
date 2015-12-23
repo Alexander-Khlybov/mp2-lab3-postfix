@@ -4,7 +4,9 @@ int main(void) {
     string str = "";
     cout << "Enter the arithmetic expression:" << endl;
     char t;
-    cin >> t;
+    cin >> str;
+
+    // цикл позволяет писать строку с пробелами.
     while (t != '\\') {
         str += t;
         cin >> t;
@@ -12,7 +14,6 @@ int main(void) {
 
     Postfix p;
     int tmp = p.setString(str);
-
     p.procStr();
     p.printPostfix();
     VariableType res = p.calculate();
