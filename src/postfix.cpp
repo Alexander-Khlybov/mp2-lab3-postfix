@@ -31,55 +31,43 @@ Stack<char> operationsStack;
 char temp;
 
 for (int i = 0; i < infixString.length(); i++){
-
+    if (infixString[i] == _SPACE_)
+        continue;
 	temp = infixString[i];
 
     if (operations.count(temp)) {
+        char t = '0';
         if ((!operationsStack.isEmpty())) {
-            char t = operationsStack.pop();
+            t = operationsStack.pop();
             operationsStack.push(t);
-
-            if ((operations[temp] <= operations[t]) && (temp != '('))
-                while (operations[temp] <= operations[t]) {
-                    operationsStack.push(operationsStack.pop());
-
-                    if (!operationsStack.isEmpty()) {
-                        t = operationsStack.pop();
-                        operationsStack.push(t);
-                    }
-                    else { 
-                        break; 
-                    }
-                }
         }
-
-		operationsStack.push(temp);
+        
+            if ((operations[temp] < operations[t]) && (temp != '(')) {
+                while ((!operationsStack.isEmpty()) && (operations[temp] < operations[t])) {
+                    t = operationsStack.pop();
+                    result.push(t);
+                }
+                if (t == '(') result.pop();
+            }
+            operationsStack.push(temp);
 		continue;
 	}
-
 	if (((temp >= 'a') && (temp <= 'z')) || ((temp >= 'A') && (temp <= 'Z'))) {						
 		result.push(temp);
 		continue;
 	}
 
 	if (temp == ')') {
-		if (!operationsStack.isEmpty()){
-			char t = operationsStack.pop();
-			operationsStack.push(t);
-
-			while (t != '('){
+        char t = '0';
+			while ((!operationsStack.isEmpty()) && (t != '(')){
+                t = operationsStack.pop();
 				result.push(t);
-				if (!operationsStack.isEmpty()){
-					char t = operationsStack.pop();
-					operationsStack.push(t);
-				} else {break;}
 			}
-
-			operationsStack.pop();
+            if (t == '(') result.pop();
 			continue;
 		}																		
-	}
-	throw "Incorrect symbol.";
+
+	throw ("Incorrect symbol.");
 }
 
 while (!operationsStack.isEmpty()){
