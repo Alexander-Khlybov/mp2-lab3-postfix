@@ -1,8 +1,8 @@
 #include "postfix.h"
 
 int main(void) {
-    string str = "";
-    cout << "Enter the arithmetic expression: (\\ - is end of line)" << endl;
+    string str = "a*(b+c-d)+(d/(f-c)-(k+l)/s)";
+   /* cout << "Enter the arithmetic expression: (\\ - is end of line)" << endl;
     char t;
     cin >> t;
 
@@ -10,7 +10,7 @@ int main(void) {
     while (t != '\\') {
         str += t;
         cin >> t;
-    }
+    }*/
 
     map<char, VariableType> m;
     Postfix p;
