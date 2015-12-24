@@ -88,7 +88,7 @@ while (!operationsStack.isEmpty()) {
 return resultString;
 }
 
-VariableType Postfix::calculate(const string& postfixString)const{
+VariableType Postfix::calculate(const string& postfixString, map<char, VariableType> values){
 	if (postfixString == "")
 		throw("String is empty.");
 
@@ -96,7 +96,6 @@ VariableType Postfix::calculate(const string& postfixString)const{
 	char tmp;
 	VariableType leftOperand;
 	VariableType rightOperand;
-	map<char, VariableType> values;
 
 	for (int i = 0; i < postfixString.length(); i++){
 		tmp = postfixString[i];
