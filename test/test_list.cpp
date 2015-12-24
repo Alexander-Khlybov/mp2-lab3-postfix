@@ -18,6 +18,8 @@ TEST(Node, created_node_by_key_is_equal_to_key) {
     EXPECT_EQ(0, node->next_);
 }
 
+//*******************************************************
+
 TEST(List, can_create_list) {
     List<int>* list;
     ASSERT_NO_THROW(list = new List<int>);
@@ -160,10 +162,10 @@ TEST(List, remove_works_properly) {
     list->push(3);
     list->push(5);
     list->push(4);
-    list->remove(4);
+    list->remove(5);
     List<int>* list1 = new List<int>;
     list1->push(3);
-    list1->push(5);
+    list1->push(4);
     EXPECT_EQ(*list1, *list);
 }
 
@@ -185,11 +187,15 @@ TEST(List, pushBefore_works_properly) {
     List<int>* list = new List<int>;
     list->push(3);
     list->push(4);
-    list->pushBefore(4, 5);
+    list->push(2);
+    list->pushBefore(3, 5);
     List<int>* list1 = new List<int>;
     list1->push(3);
-    list1->push(4);
     list1->push(5);
+    list1->push(4);
+    list1->push(2);
+    list->print();
+    list1->print();
     EXPECT_EQ(*list1, *list);
 }
 
@@ -198,4 +204,52 @@ TEST(List, throws_when_findKey_does_not_exist_PB) {
     list->push(3);
     list->push(4);
     ASSERT_ANY_THROW(list->pushBefore(7, 5));
+}
+
+TEST(List, pushAfter_END_works_properly) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(4);
+    list->pushAfter(3, 5);
+    List<int>* list1 = new List<int>;
+    list1->push(5);
+    list1->push(3);
+    list1->push(4);
+    EXPECT_EQ(*list1, *list);
+}
+
+TEST(List, pushBefore_START_works_properly) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(4);
+    list->pushBefore(4, 5);
+    List<int>* list1 = new List<int>;
+    list1->push(3);
+    list1->push(4);
+    list1->push(5);
+    EXPECT_EQ(*list1, *list);
+}
+
+TEST(List, remove_START_works_properly) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(4);
+    list->push(5);
+    list->remove(5);
+    List<int>* list1 = new List<int>;
+    list1->push(3);
+    list1->push(4);
+    EXPECT_EQ(*list1, *list);
+}
+
+TEST(List, remove_END_works_properly) {
+    List<int>* list = new List<int>;
+    list->push(3);
+    list->push(5);
+    list->push(4);
+    list->remove(3);
+    List<int>* list1 = new List<int>;
+    list1->push(5);
+    list1->push(4);
+    EXPECT_EQ(*list1, *list);
 }
