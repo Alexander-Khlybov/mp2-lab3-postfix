@@ -13,6 +13,6 @@ protected:
 
 public:
 	string rewriteLineFromInfixToPostfix(const string&)const;
-	VariableType calculate(const string&)const;
+	VariableType calculate(const string&, map<char, VariableType>);
 };
 #endif

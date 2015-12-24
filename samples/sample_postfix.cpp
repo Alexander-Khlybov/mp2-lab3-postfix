@@ -1,6 +1,6 @@
 #include "postfix.h"
 
-int main(void) {/*
+int main(void) {
     string str = "";
     cout << "Enter the arithmetic expression: (\\ - is end of line)" << endl;
     char t;
@@ -12,10 +12,10 @@ int main(void) {/*
         cin >> t;
     }
 
+    map<char, VariableType> m;
     Postfix p;
-    int tmp = p.setString(str);
-    p.procStr();
-    p.printPostfix();
-    VariableType res = p.calculate();
-    cout << res << endl; */
+    string str1 = p.rewriteLineFromInfixToPostfix(str);
+    cout << "Postfix -> " << str1 << endl;
+    VariableType res = p.calculate(str1, m);
+    cout << res << endl;
     return 0;}

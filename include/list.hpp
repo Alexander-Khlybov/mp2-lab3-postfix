@@ -149,7 +149,7 @@ void List<KeyType>::pushBefore  (const KeyType& findKey, const KeyType& key){
     Node<KeyType>* temporaryAddress = previousNode->next_;
     Node<KeyType>* tmpNodeKey = new Node<KeyType>(key);
     previousNode->next_ = tmpNodeKey;
-    tmpNodeKey->next_ = temporaryAddress->next_;
+    tmpNodeKey->next_ = temporaryAddress;
 }
 
 // добавление элемента с ключом key после элемента с ключом findkey
