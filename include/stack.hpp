@@ -76,14 +76,14 @@ int Stack<KeyType>::isEmpty(void) const{
 template <class KeyType>
 void Stack<KeyType>::push(const KeyType& key){
 	if (isFull())
-		throw("Stack is full");
+		throw exception("Stack is full");
 	list_->push(key);
 }
 
 template <class KeyType>
 KeyType Stack<KeyType>::pop(void){
 	if (isEmpty())
-		throw("Stack is empty");
+		throw exception("Stack is empty");
 	KeyType tmp = list_->getFirst()->key_;
 	list_->remove(tmp);
 	return tmp;
