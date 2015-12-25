@@ -100,7 +100,7 @@ int List<KeyType>::operator!= (const List& list)const{
 template <class KeyType>
 Node<KeyType>* List<KeyType>::find(const KeyType& key) const{
     if (first_ == 0)
-        throw("List doesn't exist");
+        throw exception("List doesn't exist");
       
     Node<KeyType>* node = first_;
     do {
@@ -111,7 +111,7 @@ Node<KeyType>* List<KeyType>::find(const KeyType& key) const{
 
     if (node == 0){
         delete node;
-        throw("Node is not found");
+        throw exception("Node is not found");
     }
 
     return node;
@@ -125,7 +125,7 @@ void List<KeyType>::push(const KeyType& key){
         node = new Node<KeyType>(key);
     }
     catch (...) {
-        throw("No memory.");
+        throw exception("No memory.");
     }
     
     node->next_ = first_;
@@ -165,7 +165,7 @@ void List<KeyType>::pushAfter(const KeyType& findKey, const KeyType& key){
     try{
         node = new Node<KeyType>(key);
     } catch (...) {
-        throw("No memory.");
+        throw exception("No memory.");
     }
 
     firstOccurrence->next_ = node;
@@ -184,7 +184,7 @@ void List<KeyType>::pushEnd(const KeyType& key){
     try {
         node = new Node<KeyType>(key);
     } catch (...) {
-        throw("No memory.");
+        throw exception("No memory.");
     }
 
     Node<KeyType>* first = first_;

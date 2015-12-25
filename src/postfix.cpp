@@ -27,7 +27,7 @@ void Postfix::checkBrackets(const string& s)const {
     }
 
     if (leftBrackets != rightBrackets)
-        throw("Incorrect line.");
+        throw exception("Incorrect line.");
 }
 
 int Postfix::checkingLine(const string &s) const
@@ -45,10 +45,13 @@ int Postfix::checkingLine(const string &s) const
 
     char left;
     char right;
-
-    for (int i = 0, j = 1; j < s.length(); i++, j++) {
+    int m = 0;
+    for (int i, j = 1; j < s.length(); j++) {
+        i = m;
         left = s[i];
         right = s[j];
+        if (right == _SPACE_)
+            continue;
 
         if ((!p.isOperator(left)) && (!p.isOperator(right)))
             return 1;
@@ -62,9 +65,8 @@ int Postfix::checkingLine(const string &s) const
         if ((left == ')') && (right == '('))
             return 4;
 
-        if (((p.isOperator(left) == (p.isOperator(right))) && ((left != ')') || (left != '('))) && (left != '-') && (right != '-')) {
+        if (((p.isOperator(left) == (p.isOperator(right))) && ((left != ')') || (left != '('))) && (left != '-') && (right != '-'))
             return 5;
-        }
 
         if ((left == '*') && ((right == '+') || (right == '-') || (right == '/') || (right == ')') || (right == '+')))
             return 6;
@@ -80,25 +82,27 @@ int Postfix::checkingLine(const string &s) const
 
         if ((right == ')') && ((left == '+') || (left == '-') || (left == '*') || (left == '/')))
             return 10;
+        m = j;
     }
     return 0;
 }
 
+
 string Postfix::rewriteLineFromInfixToPostfix(const string& infixString)const {
 
     if (!infixString.length()) {
-        throw("String is empty.");
+        throw exception("String is empty.");
     }
 
     checkBrackets(infixString);
     int tmp3 = checkingLine(infixString);
     if (tmp3)
-        throw ("Incorrect line.");
+        throw exception("Incorrect line.");
 
     map <char, int> operations;
     operations['*'] = 3; operations['/'] = 3;
     operations['+'] = 2; operations['-'] = 2;
-    operations['('] = 1; operations['='] = 0;
+    operations['('] = 1;
 
     Stack<char> result;
     Stack<char> operationsStack;
@@ -142,7 +146,7 @@ string Postfix::rewriteLineFromInfixToPostfix(const string& infixString)const {
             continue;
         }
 
-        throw ("Incorrect symbol.");
+        throw exception("Incorrect symbol.");
     }
 
     while (!operationsStack.isEmpty()) {
@@ -150,7 +154,7 @@ string Postfix::rewriteLineFromInfixToPostfix(const string& infixString)const {
     }
 
     if (result.isEmpty())
-        throw "Line doesn't contain an expression.";
+        throw exception("Line doesn't contain an expression.");
 
     string resultString = "";
 
@@ -165,7 +169,7 @@ string Postfix::rewriteLineFromInfixToPostfix(const string& infixString)const {
 
 VariableType Postfix::calculate(const string& postfixString, map<char, VariableType> values) {
     if (postfixString == "")
-        throw("String is empty.");
+        throw exception("String is empty.");
 
     Stack<VariableType> result;
     char tmp;
@@ -188,11 +192,16 @@ VariableType Postfix::calculate(const string& postfixString, map<char, VariableT
         }
 
         if (result.isEmpty())
-            throw ("Error.");
+            throw exception("Error.");
 
         rightOperand = result.pop();
+        if ((result.isEmpty()) && (tmp == '-')) {
+            result.push(-rightOperand);
+            continue;
+        }
+
         if (result.isEmpty())
-            throw ("Error.");
+            throw exception("Error.");
 
         leftOperand = result.pop();
         switch (tmp) {
@@ -213,6 +222,6 @@ VariableType Postfix::calculate(const string& postfixString, map<char, VariableT
 
     VariableType res = result.pop();
     if (!result.isEmpty())
-        throw("Incorrect line.");
+        throw exception("Incorrect line.");
     return res;
 }

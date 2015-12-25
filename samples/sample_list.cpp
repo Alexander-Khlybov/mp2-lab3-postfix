@@ -16,9 +16,14 @@ int main(void) {
 
     list->pushAfter(1, 2);
     list->print();
-    cout << "remove" << endl;
 
+    cout << "pushBefore" << endl;
+    list->pushBefore(3, 7);
+    list->print();
+
+    cout << "remove" << endl;
     list->remove(1);
     list->print();
-        cout << endl << endl;
+    cout << endl << endl;
+
     return 0;}
