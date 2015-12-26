@@ -10,7 +10,7 @@ int main(void) {
     try {
         str1 = p.rewriteLineFromInfixToPostfix(str);
     }
-    catch (const exception &e) {
+    catch (const exception& e) {
         cout << e.what() << endl;
         return 1;
     }
@@ -21,8 +21,8 @@ int main(void) {
     try {
         res = p.calculate(str1, m);
     }
-    catch (const exception &e) {
-        cout << e.what() << endl;
+    catch (string &e) {
+        cout << e << endl;
         return 1;
     }
     cout << "Result : " << res << endl;

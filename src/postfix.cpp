@@ -27,7 +27,7 @@ void Postfix::checkBrackets(const string& s)const {
     }
 
     if (leftBrackets != rightBrackets)
-        throw exception("Incorrect line.");
+        throw "Incorrect line.";
 }
 
 int Postfix::checkingLine(const string &s) const
