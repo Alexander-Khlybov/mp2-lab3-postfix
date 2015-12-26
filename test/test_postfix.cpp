@@ -3,8 +3,8 @@
 #include <gtest.h>
 
 TEST(Postfix, rewriteLineFromInfixToPostfix_works_properly){
-	string str = "a*(b+c-d)+(d/(f-c)-(k+l)/s)";
-	string str1 = "abcd-+*dfc-/kl+s/-+";
+	string str = "a*(b+c-d)+(d/(f-c)-(k+l)/s)*k";
+	string str1 = "abc+d-*dfc-/kl+s/-k*+";
 	Postfix p;
 	EXPECT_EQ(str1, p.rewriteLineFromInfixToPostfix(str));
 }

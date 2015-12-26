@@ -24,6 +24,8 @@ public:
 	// Взять элемент из стека.
 	KeyType pop(void);
 
+    KeyType peek(void);
+
     // Печать стека
     void print(void)const;
 private:
@@ -97,5 +99,13 @@ void Stack<KeyType>::print(void)const {
         cout << s->pop() << endl;
 
 }
+template <class KeyType>
+KeyType Stack<KeyType>::peek(void) {
+    if (list_->getFirst() == 0)
+    	throw exception("Stack is empty."); 
+        return list_->getFirst()->key_;
+    
+}
+
 
 #endif
