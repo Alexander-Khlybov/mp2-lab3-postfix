@@ -5,7 +5,7 @@ int Postfix::isOperator(char p)
     case'+':
         return 3;
     case '-':
-        return 1;
+        return 3;
     case '*':
         return 3;
     case '/':
@@ -13,7 +13,7 @@ int Postfix::isOperator(char p)
     case '(':
         return 1;
     case ')':
-        return 2;
+        return 1;
     }
     return 0;
 }
@@ -27,7 +27,7 @@ void Postfix::checkBrackets(const string& s)const {
     }
 
     if (leftBrackets != rightBrackets)
-        throw "Incorrect line.";
+        throw exception("Incorrect line.");
 }
 
 int Postfix::checkingLine(const string &s) const
@@ -57,31 +57,37 @@ int Postfix::checkingLine(const string &s) const
             return 1;
 
         if ((left == '(') && ((right == '+') || (right == '*') || (right == '/')))
-            return 2;
+            return 1;
 
         if ((right == ')') && ((left == '-') || (left == '+') || (left == '*') || (left == '/')))
-            return 3;
+            return 1;
 
         if ((left == ')') && (right == '('))
-            return 4;
+            return 1;
 
-        if (((p.isOperator(left) == (p.isOperator(right))) && ((left != ')') || (left != '('))) && (left != '-') && (right != '-'))
-            return 5;
+        if ((left == right)&&(left == '('))
+            continue;
+
+        if ((left == right) && (left == ')'))
+            continue;
+
+        if (p.isOperator(left) == p.isOperator(right))
+            return 1;
 
         if ((left == '*') && ((right == '+') || (right == '-') || (right == '/') || (right == ')') || (right == '+')))
-            return 6;
+            return 1;
 
         if ((left == '/') && ((right == '+') || (right == '-') || (right == '*') || (right == ')') || (right == '+')))
-            return 7;
+            return 1;
 
         if ((left == '+') && ((right == '*') || (right == '-') || (right == '/') || (right == ')') || (right == '+')))
-            return 8;
+            return 1;
 
         if ((left == '-') && ((right == '+') || (right == '-') || (right == '/') || (right == ')') || (right == '+')))
-            return 9;
+            return 1;
 
         if ((right == ')') && ((left == '+') || (left == '-') || (left == '*') || (left == '/')))
-            return 10;
+            return 1;
         m = j;
     }
     return 0;
