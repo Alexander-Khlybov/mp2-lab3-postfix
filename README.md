@@ -106,7 +106,7 @@
 
 ###Схема наследования классов
 
-![diagramOfClassInheritance](/Rept/diagramOfClassInheritance.xml)
+![diagramOfClassInheritance](/Rept/diagramOfClassInheritance.png)
 
 ###Описание структур данных
 
