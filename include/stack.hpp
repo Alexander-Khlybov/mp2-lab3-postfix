@@ -20,11 +20,12 @@ public:
 
 	// Положить элемент в стек.
 	void push(const KeyType&);
-	
+
 	// Взять элемент из стека.
 	KeyType pop(void);
 
-    KeyType peek(void);
+	// Просмотр головы стека
+  KeyType peek(void)const;
 
     // Печать стека
     void print(void)const;
@@ -100,11 +101,11 @@ void Stack<KeyType>::print(void)const {
 
 }
 template <class KeyType>
-KeyType Stack<KeyType>::peek(void) {
+KeyType Stack<KeyType>::peek(void)const {
     if (list_->getFirst() == 0)
-    	throw exception("Stack is empty."); 
+    	throw exception("Stack is empty.");
         return list_->getFirst()->key_;
-    
+
 }
 
 
