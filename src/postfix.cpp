@@ -121,22 +121,14 @@ string Postfix::rewriteLineFromInfixToPostfix(const string& infixString)const {
         temp = infixString[i];
 
         if (operations.count(temp)) {
-            char t = '0';
-            if ((!operationsStack.isEmpty())) {
-                t = operationsStack.pop();
-                operationsStack.push(t);
-            }
+            if ((!operationsStack.isEmpty()) && (operations[temp] <= operations[operationsStack.peek()]) && (temp != '('))
+                while ((!operationsStack.isEmpty()) && (operations[temp] <= operations[operationsStack.peek()]))
+                    result.push(operationsStack.pop());
 
-            if ((operations[temp] < operations[t]) && (temp != '(')) {
-                while ((!operationsStack.isEmpty()) && (operations[temp] < operations[t])) {
-                    t = operationsStack.pop();
-                    result.push(t);
-                }
-                if (t == '(') result.pop();
-            }
             operationsStack.push(temp);
             continue;
         }
+
         if (((temp >= 'a') && (temp <= 'z')) || ((temp >= 'A') && (temp <= 'Z'))) {
             result.push(temp);
             continue;
@@ -185,9 +177,6 @@ VariableType Postfix::calculate(const string& postfixString, map<char, VariableT
     for (int i = 0; i < postfixString.length(); i++) {
         tmp = postfixString[i];
 
-        if (postfixString[postfixString.length() - 1] == '=')
-            values[postfixString[0]] = 0;
-
         if (((tmp >= 'a') && (tmp <= 'z')) || ((tmp >= 'A') && (tmp <= 'Z'))) {
             if (!values.count(tmp)) {
                 cout << "Enter the " << tmp << ": ";
@@ -207,7 +196,7 @@ VariableType Postfix::calculate(const string& postfixString, map<char, VariableT
         }
 
         if (result.isEmpty())
-            throw exception("Error.");
+            throw exception("Error..");
 
         leftOperand = result.pop();
         switch (tmp) {

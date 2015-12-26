@@ -64,3 +64,23 @@ TEST(Stack, copied_stack_is_equal_to_source_one) {
     Stack<int>* s1 = new Stack<int>(*s);
     EXPECT_EQ(*s, *s1);
 }
+
+TEST(Stack, throws_when_peek_from_empty) {
+    Stack<int> a;
+    ASSERT_ANY_THROW(a.peek());
+}
+
+TEST(Stack, peek_works_properly) {
+    Stack<int> a;
+    a.push(1);
+    a.push(2);
+    EXPECT_EQ(2, a.peek());
+}
+
+TEST(Stack, peek_does_not_spoil_data) {
+    Stack<int> a;
+    a.push(1);
+    a.push(2);
+    a.peek();
+    EXPECT_EQ(2, a.pop());
+}

@@ -1,7 +1,7 @@
 #include "postfix.h"
 
 int main(void) {
-    string str;
+    string str = "";
     cout << "Enter an arithmetic expression." << endl;
     getline(cin, str);
     map<char, VariableType> m;
@@ -21,9 +21,12 @@ int main(void) {
     try {
         res = p.calculate(str1, m);
     }
-    catch (string &e) {
-        cout << e << endl;
+    catch (exception &e) {
+        cout << e.what() << endl;
         return 1;
+    }
+    catch (...) {
+        cout << "Division by zero." << endl;
     }
     cout << "Result : " << res << endl;
     return 0;}
