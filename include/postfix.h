@@ -14,6 +14,6 @@ protected:
     int checkingLine(const string&)const;
 public:
 	string rewriteLineFromInfixToPostfix(const string&)const;
-	VariableType calculate(const string&, map<char, VariableType>);
+	VariableType calculate(const string&, map<char, VariableType>&);
 };
 #endif

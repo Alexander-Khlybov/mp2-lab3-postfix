@@ -167,7 +167,7 @@ string Postfix::rewriteLineFromInfixToPostfix(const string& infixString)const {
     return resultString;
 }
 
-VariableType Postfix::calculate(const string& postfixString, map<char, VariableType> values) {
+VariableType Postfix::calculate(const string& postfixString, map<char, VariableType>& values) {
     if (postfixString == "")
         throw exception("String is empty.");
 

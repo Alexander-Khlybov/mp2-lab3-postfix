@@ -2,6 +2,7 @@
 
 int main(void) {
     string str;
+    cout << "Enter an arithmetic expression." << endl;
     getline(cin, str);
     map<char, VariableType> m;
     Postfix p;
@@ -13,7 +14,8 @@ int main(void) {
         cout << e.what() << endl;
         return 1;
     }
-    cout << "Postfix -> " << str1 << endl;
+    cout << endl << "Postfix form -> " << str1 << endl;
+
     VariableType res;
 
     try {
