@@ -27,7 +27,7 @@ void Postfix::checkBrackets(const string& s)const {
     }
 
     if (leftBrackets != rightBrackets)
-        throw exception("Incorrect line.");
+        throw myExcp("Incorrect line.");
 }
 
 int Postfix::checkingLine(const string &s) const
@@ -97,13 +97,13 @@ int Postfix::checkingLine(const string &s) const
 string Postfix::rewriteLineFromInfixToPostfix(const string& infixString)const {
 
     if (!infixString.length()) {
-        throw exception("String is empty.");
+        throw myExcp("String is empty.");
     }
 
     checkBrackets(infixString);
     int tmp3 = checkingLine(infixString);
     if (tmp3)
-        throw exception("Incorrect line.");
+        throw myExcp("Incorrect line.");
 
     map <char, int> operations;
     operations['*'] = 3; operations['/'] = 3;
@@ -144,7 +144,7 @@ string Postfix::rewriteLineFromInfixToPostfix(const string& infixString)const {
             continue;
         }
 
-        throw exception("Incorrect symbol.");
+        throw myExcp("Incorrect symbol.");
     }
 
     while (!operationsStack.isEmpty()) {
@@ -152,7 +152,7 @@ string Postfix::rewriteLineFromInfixToPostfix(const string& infixString)const {
     }
 
     if (result.isEmpty())
-        throw exception("Line doesn't contain an expression.");
+        throw myExcp("Line doesn't contain an expression.");
 
     string resultString = "";
 
@@ -167,7 +167,7 @@ string Postfix::rewriteLineFromInfixToPostfix(const string& infixString)const {
 
 VariableType Postfix::calculate(const string& postfixString, map<char, VariableType>& values) {
     if (postfixString == "")
-        throw exception("String is empty.");
+        throw myExcp("String is empty.");
 
     Stack<VariableType> result;
     char tmp;
@@ -187,7 +187,7 @@ VariableType Postfix::calculate(const string& postfixString, map<char, VariableT
         }
 
         if (result.isEmpty())
-            throw exception("Error.");
+            throw myExcp("Error.");
 
         rightOperand = result.pop();
         if ((result.isEmpty()) && (tmp == '-')) {
@@ -196,7 +196,7 @@ VariableType Postfix::calculate(const string& postfixString, map<char, VariableT
         }
 
         if (result.isEmpty())
-            throw exception("Error..");
+            throw myExcp("Error..");
 
         leftOperand = result.pop();
         switch (tmp) {
@@ -210,6 +210,7 @@ VariableType Postfix::calculate(const string& postfixString, map<char, VariableT
             result.push(leftOperand * rightOperand);
             break;
         case '/':
+            if (rightOperand == 0) throw myExcp("Division by zero.");
             result.push(leftOperand / rightOperand);
             break;
         }
@@ -217,6 +218,6 @@ VariableType Postfix::calculate(const string& postfixString, map<char, VariableT
 
     VariableType res = result.pop();
     if (!result.isEmpty())
-        throw exception("Incorrect line.");
+        throw myExcp("Incorrect line.");
     return res;
 }

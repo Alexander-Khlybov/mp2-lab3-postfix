@@ -26,7 +26,7 @@ int main(void) {
         return 1;
     }
     catch (...) {
-        cout << "Division by zero." << endl;
+        cout << "Unknown error." << endl;
     }
     cout << "Result : " << res << endl;
     return 0;}

@@ -79,14 +79,14 @@ int Stack<KeyType>::isEmpty(void) const{
 template <class KeyType>
 void Stack<KeyType>::push(const KeyType& key){
 	if (isFull())
-		throw exception("Stack is full");
+		throw myExcp("Stack is full");
 	list_->push(key);
 }
 
 template <class KeyType>
 KeyType Stack<KeyType>::pop(void){
 	if (isEmpty())
-		throw exception("Stack is empty");
+		throw myExcp("Stack is empty");
 	KeyType tmp = list_->getFirst()->key_;
 	list_->remove(tmp);
 	return tmp;
@@ -103,7 +103,7 @@ void Stack<KeyType>::print(void)const {
 template <class KeyType>
 KeyType Stack<KeyType>::peek(void)const {
     if (list_->getFirst() == 0)
-    	throw exception("Stack is empty.");
+    	throw myExcp("Stack is empty.");
         return list_->getFirst()->key_;
 
 }

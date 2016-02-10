@@ -146,6 +146,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\include\excp.h" />
     <ClInclude Include="..\..\..\include\list.hpp" />
     <ClInclude Include="..\..\..\include\node.hpp" />
     <ClInclude Include="..\..\..\include\postfix.h" />
